@@ -1,0 +1,126 @@
+version: "3"
+services:
+  ### Nginx container #########################################
+
+  nginx:
+    container_name: dnmp-nginx
+    image: nginx:1.15
+    ports:
+      - "${HTTP_PORT}:80"
+      - "${HTTPS_PORT}:443"
+    volumes:
+      - ${WWW_DIR}:/etc/nginx/html/:rw
+      - ./work/components/nginx/config/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./work/components/nginx/config/conf.d:/etc/nginx/conf.d:ro
+      - ./work/components/nginx/log:/var/log/nginx:rw
+    restart: always
+    privileged: true
+    networks:
+      - net-php
+      - net-es
+
+  ### PHP container #########################################
+
+  php:
+    container_name: dnmp-php
+    build:
+      context: ./build/php
+      args:
+        TIME_ZONE: ${GLOBAL_TIME_ZONE}
+        CHANGE_SOURCE: ${GLOBAL_CHANGE_SOURCE}
+    volumes:
+      - ${WWW_DIR}:/etc/nginx/html:rw
+      - ./work/components/php/config/php.ini:/usr/local/etc/php/php.ini:ro
+      - ./work/components/php/config/php-fpm.conf:/usr/local/etc/php-fpm.d/www.conf:rw
+      - ./work/components/php/log:/var/log:rw
+    restart: always
+    privileged: true
+    networks:
+      - net-php
+      - net-mysql
+      - net-redis
+      - net-es
+
+  ### Mysql container #########################################
+
+  mysql:
+    container_name: dnmp-mysql
+    image: mysql:5.7
+    ports:
+      - "${MYSQL_PORT}:3306"
+    volumes:
+      - ./work/components/mysql/data:/var/lib/mysql:rw
+      - ./work/components/mysql/config/mysql.cnf:/etc/mysql/conf.d/mysql.cnf:ro
+      - ./work/components/mysql/log:/var/log/mysql:rw
+    restart: always
+    privileged: true
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
+    networks:
+      - net-mysql
+
+  ### Redis container #########################################
+
+  redis:
+    container_name: dnmp-redis
+    image: redis:4.0
+    ports:
+      - "${REDIS_PORT}:6379"
+    volumes:
+      - ./work/components/redis/config/redis.conf:/usr/local/etc/redis/redis.conf:ro
+      - ./work/components/redis/log/redis.log:/var/log/redis/redis.log:rw
+    restart: always
+    privileged: true
+    networks:
+      - net-redis
+
+  ### ElasticSearch container #########################################
+
+  elasticsearch:
+    container_name: dnmp-es
+    image: elasticsearch:7.1.0
+    ports:
+      - "${ELASTIC_TCP_PORT}:9300"
+      - "${ELASTIC_HTTP_PORT}:9200"
+    volumes:
+      - ./work/components/es/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:rw
+      - ./work/components/es/data:/usr/share/elasticsearch/data
+      - ./work/components/es/log:/usr/share/elasticsearch/logs
+    environment:
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - discovery.type=single-node
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    restart: always
+    networks:
+      - net-es
+
+  ### Tools container #########################################
+
+  tools:
+    container_name: dnmp-tools
+    build:
+      context: ./build/tools
+      args:
+        TIME_ZONE: ${GLOBAL_TIME_ZONE}
+        CHANGE_SOURCE: ${GLOBAL_CHANGE_SOURCE}
+    volumes:
+      - ./work/components/tools/start.sh:/home/start.sh:rw
+      - ./work/components/tools/backup:/backup:rw
+      - ./work/components/tools/cron.d:/etc/cron.d:rw
+    restart: always
+    privileged: true
+    networks:
+      - net-php
+      - net-mysql
+      - net-redis
+      - net-es
+
+networks:
+  net-php:
+  net-mysql:
+  net-redis:
+  net-es:
