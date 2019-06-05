@@ -1,4 +1,4 @@
-# DNMP 1.0
+# DNMP 1.0.1
 
 DNMP 可以构建出基于 Docker 的 PHP 开发环境，其优势有在短时间内随意构建不同版本的相关服务、环境统一分布在不同服务器等，使开发者能够更专注于开发业务本身。
 
@@ -12,7 +12,8 @@ DNMP 可以构建出基于 Docker 的 PHP 开发环境，其优势有在短时�
 ### 组件（容器）及相关软件版本
 
     Ningx：1.15
-    PHP：php-fpm 7.3
+    PHP56：php-fpm 5.6
+    PHP73：php-fpm 7.3
     MySQL：5.7
     Redis：4.0
     ElasticSearch：7.1.0

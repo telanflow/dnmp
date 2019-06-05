@@ -37,7 +37,7 @@
 <p align="center" class="mine">DNMP</p>
 
 <p class="desc">
-	Version：1.0<br />
+	Version：1.0.1<br />
 	Time：<?= date_default_timezone_get() . "&nbsp;/&nbsp;" . date("Y-m-d H:i:s");?>
 </p>
 
