@@ -16,27 +16,54 @@ services:
     restart: always
     privileged: true
     networks:
-      - net-php
+      - net-php56
+      - net-php73
       - net-es
 
   ### PHP container #########################################
 
-  php:
-    container_name: dnmp-php
+  php56:
+    container_name: dnmp-php56
     build:
-      context: ./build/php
+      context: ./build/php56
       args:
         TIME_ZONE: ${GLOBAL_TIME_ZONE}
         CHANGE_SOURCE: ${GLOBAL_CHANGE_SOURCE}
+    expose:
+      - "9000"
     volumes:
       - ${WWW_DIR}:/etc/nginx/html:rw
-      - ./work/components/php/config/php.ini:/usr/local/etc/php/php.ini:ro
-      - ./work/components/php/config/php-fpm.conf:/usr/local/etc/php-fpm.d/www.conf:rw
-      - ./work/components/php/log:/var/log:rw
+      - ./work/components/php56/config/php.ini:/usr/local/etc/php/php.ini:ro
+      - ./work/components/php56/config/php-fpm.conf:/usr/local/etc/php-fpm.d/www.conf:rw
+      - ./work/components/php56/log:/var/log:rw
     restart: always
     privileged: true
     networks:
-      - net-php
+      - net-php56
+      - net-php73
+      - net-mysql
+      - net-redis
+      - net-es
+
+  php73:
+    container_name: dnmp-php73
+    build:
+      context: ./build/php73
+      args:
+        TIME_ZONE: ${GLOBAL_TIME_ZONE}
+        CHANGE_SOURCE: ${GLOBAL_CHANGE_SOURCE}
+    expose:
+      - "9000"
+    volumes:
+      - ${WWW_DIR}:/etc/nginx/html:rw
+      - ./work/components/php73/config/php.ini:/usr/local/etc/php/php.ini:ro
+      - ./work/components/php73/config/php-fpm.conf:/usr/local/etc/php-fpm.d/www.conf:rw
+      - ./work/components/php73/log:/var/log:rw
+    restart: always
+    privileged: true
+    networks:
+      - net-php56
+      - net-php73
       - net-mysql
       - net-redis
       - net-es
@@ -114,13 +141,15 @@ services:
     restart: always
     privileged: true
     networks:
-      - net-php
+      - net-php56
+      - net-php73
       - net-mysql
       - net-redis
       - net-es
 
 networks:
-  net-php:
+  net-php56:
+  net-php73:
   net-mysql:
   net-redis:
   net-es:
