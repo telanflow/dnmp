@@ -34,10 +34,10 @@ DNMP 可以构建出基于 Docker 的 PHP 开发环境，其优势有在短时�
 
 ## 开始安装
 
-没有安装 Docker 的同学移步 [安装教程](https://github.com/exc-soft/docker-lnmp#安装-docker-及相关工具)，如果你有足够的时间强烈建议通读 [Docker — 从入门到实践](https://yeasy.gitbooks.io/docker_practice/content/)
+没有安装 Docker 的同学移步 [安装教程](https://github.com/ziiber/dnmp.git#安装-docker-及相关工具)，如果你有足够的时间强烈建议通读 [Docker — 从入门到实践](https://yeasy.gitbooks.io/docker_practice/content/)
 
     cd ~/
-    git clone https://github.com/exc-soft/docker-lnmp.git
+    git clone https://github.com/ziiber/dnmp.git
 
     cd docker-lnmp
     cp .env-example .env
