@@ -73,7 +73,7 @@ DNMP 可以构建出基于 Docker 的 PHP 开发环境，其优势有在短时�
     # 删除dnmp
     sudo docker rm $(sudo docker ps -a | grep dnmp | awk '{print $1}')
 
-    # 重新构建过清理无效数据（注意如果执行 docker images -a 会出现一些 none 的镜像，这些是构建镜像的中间层不占用空间也不是垃圾数据，不用管，使用下面的命令就是清理无效数据）
+    # ⚠️清理所有停止的容器（注意如果执行 docker images -a 会出现一些 none 的镜像，这些是构建镜像的中间层不占用空间也不是垃圾数据，不用管）
     sudo docker system prune
 
 更多可通过 `sudo docker -h` 或者 `sudo docker-compose -h` 查看

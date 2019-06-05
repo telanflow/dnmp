@@ -11,7 +11,8 @@ services:
     volumes:
       - ${WWW_DIR}:/etc/nginx/html/:rw
       - ./work/components/nginx/config/nginx.conf:/etc/nginx/nginx.conf:ro
-      - ./work/components/nginx/config/conf.d:/etc/nginx/conf.d:ro
+      - ./work/components/nginx/config/vhost:/etc/nginx/conf.d:ro
+      - ./work/components/nginx/config/rewrite:/etc/nginx/rewrite:ro
       - ./work/components/nginx/log:/var/log/nginx:rw
     restart: always
     privileged: true
