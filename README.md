@@ -21,7 +21,7 @@ DNMP 可以构建出基于 Docker 的 PHP 开发环境，其优势有在短时�
 
 ### 目录结构
 
-    docker-lnmp
+    dnmp
     |----/build                  镜像构建目录
     |----/work                   持久化目录
     |--------/components/        组件库
@@ -150,7 +150,7 @@ DaoCloud 加速器：http://guide.daocloud.io/dcs/daocloud-9153151.html
 腾讯云加速器：https://www.qcloud.com/document/product/457/7207
 
 ### 鸣谢
-[Docker LNMP](https://github.com/exc-soft/docker-lnmp)
+[Docker LNMP 3.2](https://github.com/exc-soft/docker-lnmp)
 
 ### License
 MIT
