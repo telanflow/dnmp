@@ -39,7 +39,7 @@ DNMP 可以构建出基于 Docker 的 PHP 开发环境，其优势有在短时�
     cd ~/
     git clone https://github.com/ziiber/dnmp.git
 
-    cd docker-lnmp
+    cd dnmp
     cp .env-example .env
 
     # 配置数据库密码、时区、端口等
@@ -82,7 +82,7 @@ DNMP 可以构建出基于 Docker 的 PHP 开发环境，其优势有在短时�
     
 比如在 php 里新增一个扩展
 
-    # 1、更改对应的 docker-lnmp/build/php/Dockerfile
+    # 1、更改对应的 dnmp/build/php/Dockerfile
     # 2、重新构建镜像
     sudo docker-compose build [php|...]
 
