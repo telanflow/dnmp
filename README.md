@@ -56,13 +56,13 @@ DNMP 可以构建出基于 Docker 的 PHP 开发环境，其优势有在短时�
     sudo docker-compose ps
     
     # 启动部分服务在后边加服务名，不加表示启动所有，-d 表示在后台运行
-    sudo docker-compose up [nginx|php| ...] -d
+    sudo docker-compose up [nginx|php56|php73| ...] -d
     
     # 停止和启动类似
-    sudo docker-compose stop [nginx|php| ...]
+    sudo docker-compose stop [nginx|php56|php73| ...]
 
     # 停止并删除相关的容器
-    sudo docker-compose down [nginx|php| ...]
+    sudo docker-compose down [nginx|php56|php73| ...]
 
     # 删除所有未运行的容器
     sudo docker rm $(sudo docker ps -a -q)
@@ -84,7 +84,7 @@ DNMP 可以构建出基于 Docker 的 PHP 开发环境，其优势有在短时�
 
     # 1、更改对应的 dnmp/build/php/Dockerfile
     # 2、重新构建镜像
-    sudo docker-compose build [php|...]
+    sudo docker-compose build [php56|php73|...]
 
 ### 如何在 php 里连接 MySQL 和 Redis？
 
