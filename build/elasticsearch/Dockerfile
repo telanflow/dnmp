@@ -1,9 +1,7 @@
 FROM elasticsearch:7.1.0
 
-ARG IK_VERSION=7.1.0
 ARG CHANGE_SOURCE=false
 ARG TIME_ZONE=UTC
-
 ENV TIME_ZONE=${TIME_ZONE} LC_ALL=C.UTF-8
 
 RUN \
@@ -28,4 +26,4 @@ RUN \
   chmod 0777 -R config ; \
   \
   # ⬇ 安装 IK分词器
-  elasticsearch-plugin install https://github.com/medcl/elasticsearch-analysis-ik/releases/download/v$IK_VERSION/elasticsearch-analysis-ik-$IK_VERSION.zip;
+  elasticsearch-plugin install https://github.com/medcl/elasticsearch-analysis-ik/releases/download/v7.1.0/elasticsearch-analysis-ik-7.1.0.zip;
