@@ -123,6 +123,7 @@ services:
         soft: -1
         hard: -1
     restart: always
+    privileged: true
     networks:
       - net-es
 
