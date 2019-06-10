@@ -106,7 +106,10 @@ services:
 
   elasticsearch:
     container_name: dnmp-es
-    image: ./build/elasticsearch
+    build:
+      context: ./build/elasticsearch
+      args:
+        CHANGE_SOURCE: ${GLOBAL_CHANGE_SOURCE}
     ports:
       - "${ELASTIC_TCP_PORT}:9300"
       - "${ELASTIC_HTTP_PORT}:9200"
