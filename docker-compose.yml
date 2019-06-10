@@ -109,6 +109,7 @@ services:
     build:
       context: ./build/elasticsearch
       args:
+        TIME_ZONE: ${GLOBAL_TIME_ZONE}
         CHANGE_SOURCE: ${GLOBAL_CHANGE_SOURCE}
     ports:
       - "${ELASTIC_TCP_PORT}:9300"

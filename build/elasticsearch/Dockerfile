@@ -6,8 +6,6 @@ ARG TIME_ZONE=UTC
 
 ENV TIME_ZONE=${TIME_ZONE} LC_ALL=C.UTF-8
 
-COPY sources.list /etc/apt/china.sources.list
-
 RUN \
   # ⬇ 修改时区
   ln -snf /usr/share/zoneinfo/$TIME_ZONE /etc/localtime ; \ 
@@ -30,4 +28,4 @@ RUN \
   chmod 0777 -R config ; \
   \
   # ⬇ 安装 IK分词器
-  elasticsearch-plugin install https://github.com/medcl/elasticsearch-analysis-ik/releases/download/v${IK_VERSION}/elasticsearch-analysis-ik-${IK_VERSION}.zip;
+  elasticsearch-plugin install https://github.com/medcl/elasticsearch-analysis-ik/releases/download/v$IK_VERSION/elasticsearch-analysis-ik-$IK_VERSION.zip;
