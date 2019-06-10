@@ -106,7 +106,7 @@ services:
 
   elasticsearch:
     container_name: dnmp-es
-    image: elasticsearch:7.1.0
+    image: ./build/elasticsearch
     ports:
       - "${ELASTIC_TCP_PORT}:9300"
       - "${ELASTIC_HTTP_PORT}:9200"
@@ -118,11 +118,12 @@ services:
       - bootstrap.memory_lock=true
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
       - discovery.type=single-node
+      - http.cors.enabled=true
+      - http.cors.allow-origin=*
     ulimits:
       memlock:
         soft: -1
         hard: -1
-    restart: always
     privileged: true
     networks:
       - net-es
