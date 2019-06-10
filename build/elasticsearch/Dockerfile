@@ -11,13 +11,13 @@ RUN \
   mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.bak ; \
   wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo; \
   wget -O /etc/yum.repos.d/epel.repo http://mirrors.aliyun.com/repo/epel-7.repo; \
-  fi \
+  fi;
 
-  RUN \
+RUN \
   # ⬇ 设置0777权限
-  chmod 0777 -R data ; \
-  chmod 0777 -R logs ; \
-  chmod 0777 -R config ; \
+  chmod 0777 -R /usr/share/elasticsearch/data ; \
+  chmod 0777 -R /usr/share/elasticsearch/logs ; \
+  chmod 0777 -R /usr/share/elasticsearch/config ; \
   \
   # ⬇ 安装 IK分词器
   elasticsearch-plugin install https://github.com/medcl/elasticsearch-analysis-ik/releases/download/v7.1.0/elasticsearch-analysis-ik-7.1.0.zip;
