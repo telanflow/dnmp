@@ -1,4 +1,5 @@
 version: "3"
+
 services:
   ### Nginx container #########################################
 
@@ -78,7 +79,7 @@ services:
       - "${MYSQL_PORT}:3306"
     volumes:
       - ./work/components/mysql/data:/var/lib/mysql:rw
-      - ./work/components/mysql/config/mysql.cnf:/etc/mysql/conf.d/mysql.cnf:ro
+      - ./work/components/mysql/config/my.cnf:/etc/mysql/mysql.conf.d/mysqld.cnf:ro
       - ./work/components/mysql/log:/var/log/mysql:rw
     restart: always
     privileged: true
@@ -104,17 +105,15 @@ services:
 
   ### ElasticSearch container #########################################
 
-  elasticsearch:
+  es:
     container_name: dnmp-es
     build:
       context: ./build/elasticsearch
-      args:
-        CHANGE_SOURCE: ${GLOBAL_CHANGE_SOURCE}
     ports:
       - "${ELASTIC_TCP_PORT}:9300"
       - "${ELASTIC_HTTP_PORT}:9200"
     volumes:
-      - ./work/components/es/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:rw
+      - ./work/components/es/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
       - ./work/components/es/data:/usr/share/elasticsearch/data
       - ./work/components/es/log:/usr/share/elasticsearch/logs
     environment:
