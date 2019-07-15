@@ -24,7 +24,7 @@ RUN \
   if [ ${CHANGE_SOURCE} = true ]; then \
   mv /etc/apt/sources.list /etc/apt/source.list.bak ; \
   mv /home/resource/sources.list /etc/apt/sources.list ; \
-  composer config -g repo.packagist composer https://packagist.laravel-china.org ; \
+  composer config -g repo.packagist composer https://mirrors.aliyun.com/composer/ ; \
   fi \
   \
   # ⬇ 更新、安装基础组件
@@ -65,6 +65,9 @@ RUN \
 RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ ; \
   docker-php-ext-configure ldap --with-libdir=lib/x86_64-linux-gnu/ ; \
   docker-php-ext-install -j$(nproc) gd mcrypt ldap soap xsl xmlrpc bz2 zip pcntl pdo_mysql mysqli exif bcmath calendar sockets ; \
+  \
+  # ⬇ XDebug
+  pecl install xdebug ; \
   \
   # ⬇ Redis
   pecl install /home/resource/$REDIS ; \ 
