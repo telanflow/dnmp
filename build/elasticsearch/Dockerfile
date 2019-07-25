@@ -3,6 +3,7 @@ FROM elasticsearch:7.1.0
 RUN \
   # ⬇ 更新、安装基础组件
   yum update -y && yum install -y vim \
+  iputils \
   curl \
   wget \
   git ;

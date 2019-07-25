@@ -2,7 +2,7 @@ FROM php:7.3-fpm
 
 COPY resource /home/resource
 
-ARG CHANGE_SOURCE=false
+ARG CHANGE_SOURCE=true
 ARG TIME_ZONE=UTC
 
 ARG SWOOLE=swoole-4.3.4.tgz
@@ -29,24 +29,28 @@ RUN \
   fi \
   \
   # ⬇ 更新、安装基础组件
-  apt-get update && apt-get install -y --no-install-recommends \
+  apt-get update && apt-get install -y --allow-remove-essential --no-install-recommends \
   procps \
-  libxml++2.6-dev \
+  libtinfo5 \
   libpq-dev \
+  libxml++2.6-dev \
+  libfreetype6-dev \
+  libjpeg62-turbo-dev \
   zlib1g-dev \
   libzip-dev \
   libbz2-dev \
-  libfreetype6-dev \
-  libjpeg62-turbo-dev \
   libpng-dev \
+  libmcrypt-dev \
+  libmhash-dev \
+  libssl-dev \
+  librabbitmq-dev \
+  iputils-ping \
   ntpdate \
   cron \
   vim \
   unzip \
   git \
-  wget \
-  libmcrypt-dev \
-  libmhash-dev ;
+  wget ;
 
 ####################################################################################
 # 安装 PHP 扩展
@@ -55,10 +59,11 @@ RUN \
 RUN docker-php-ext-configure gd \
   --with-freetype-dir=/usr/include/ \
   --with-jpeg-dir=/usr/include/ ; \
-  docker-php-ext-install gd pdo_mysql mysqli bz2 zip sockets pgsql pcntl pdo_pgsql bcmath soap ; \
+  docker-php-ext-install -j$(nproc) gd pdo_mysql ldap mysqli bz2 zip sockets pgsql pcntl pdo_pgsql bcmath soap ; \
   \
   # ⬇ XDebug
   pecl install xdebug ; \
+  docker-php-ext-enable xdebug ; \
   \
   # ⬇ Redis
   pecl install /home/resource/$REDIS ; \ 

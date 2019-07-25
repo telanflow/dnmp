@@ -1,4 +1,4 @@
-# DNMP 1.0.1
+# DNMP 1.0.2
 
 DNMP 可以构建出基于 Docker 的 PHP 开发环境，其优势有在短时间内随意构建不同版本的相关服务、环境统一分布在不同服务器等，使开发者能够更专注于开发业务本身。
 
@@ -34,10 +34,10 @@ DNMP 可以构建出基于 Docker 的 PHP 开发环境，其优势有在短时�
 
 ## 开始安装
 
-没有安装 Docker 的同学移步 [安装教程](https://github.com/ziiber/dnmp.git#安装-docker-及相关工具)，如果你有足够的时间强烈建议通读 [Docker — 从入门到实践](https://yeasy.gitbooks.io/docker_practice/content/)
+没有安装 Docker 的同学移步 [安装教程](https://github.com/telanflow/dnmp.git#安装-docker-及相关工具)，如果你有足够的时间强烈建议通读 [Docker — 从入门到实践](https://yeasy.gitbooks.io/docker_practice/content/)
 
     cd ~/
-    git clone https://github.com/ziiber/dnmp.git
+    git clone https://github.com/telanflow/dnmp.git
 
     cd dnmp
     cp .env-example .env
@@ -46,7 +46,7 @@ DNMP 可以构建出基于 Docker 的 PHP 开发环境，其优势有在短时�
     vim .env
 
     # 构建镜像并启动容器
-    sudo docker-compose up --build -d
+    sudo docker-compose up --build -d --no-cache
 
 启动成功访问 http://localhost 即可
 
@@ -84,7 +84,7 @@ DNMP 可以构建出基于 Docker 的 PHP 开发环境，其优势有在短时�
 
     # 1、更改对应的 dnmp/build/php/Dockerfile
     # 2、重新构建镜像
-    sudo docker-compose build [php56|php73|...]
+    sudo docker-compose build --no-cache [php56|php73|...]
 
 ### 如何在 php 里连接 MySQL 和 Redis？
 
@@ -108,6 +108,14 @@ DNMP 可以构建出基于 Docker 的 PHP 开发环境，其优势有在短时�
         $redis->connect('redis', 6379);
         $redis->set("test-key","hello");
         echo "Stored string in redis:: " . $redis->get("test-key");
+
+### XDebug 管理
+
+- Google 浏览器安装 Xdebug 插件：[xdebug-helper](https://github.com/mac-cain13/xdebug-helper-for-chrome)
+
+- PHPStrom 默认配置就可以，打断点开始调试，默认不需要添加参数
+
+- Postman 断点调试（API接口），直接在后面增加`?XDEBUG_SESSION_START=PHPSTORM`参数，即：`https://telan.me?XDEBUG_SESSION_START=PHPSTORM`
 
 ### 如何使用 Tools 组件里的计划任务？
 

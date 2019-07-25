@@ -50,13 +50,14 @@ RUN \
   libxml2-dev \
   libxslt-dev \
   libbz2-dev \
+  iputils-ping \
+  libmcrypt-dev \
+  libmhash-dev \
   cron \
   vim \
   unzip \
   git \
-  wget \
-  libmcrypt-dev \
-  libmhash-dev ;
+  wget ;
 
 ####################################################################################
 # 安装 PHP 扩展
@@ -68,6 +69,7 @@ RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-di
   \
   # ⬇ XDebug
   pecl install xdebug ; \
+  docker-php-ext-enable xdebug ; \
   \
   # ⬇ Redis
   pecl install /home/resource/$REDIS ; \ 
