@@ -64,7 +64,6 @@ RUN docker-php-ext-configure gd \
   \
   # ⬇ XDebug
   pecl install /home/resource/$XDEBUG ; \
-  echo "extension=xdebug.so" > /usr/local/etc/php/conf.d/xdebug.ini ; \
   \
   # ⬇ Redis
   pecl install /home/resource/$REDIS ; \ 
