@@ -8,6 +8,7 @@ ARG TIME_ZONE=UTC
 ARG SWOOLE=swoole-4.3.4.tgz
 ARG REDIS=redis-4.3.0.tgz
 ARG MCRYPT=mcrypt-1.0.2.tgz
+ARG XDEBUG=xdebug-2.7.2.tgz
 
 ENV TIME_ZONE=${TIME_ZONE} LC_ALL=C.UTF-8
 
@@ -62,8 +63,8 @@ RUN docker-php-ext-configure gd \
   docker-php-ext-install -j$(nproc) gd pdo_mysql ldap mysqli bz2 zip sockets pgsql pcntl pdo_pgsql bcmath soap ; \
   \
   # ⬇ XDebug
-  pecl install xdebug ; \
-  docker-php-ext-enable xdebug ; \
+  pecl install /home/resource/$XDEBUG ; \
+  echo "extension=xdebug.so" > /usr/local/etc/php/conf.d/xdebug.ini ; \
   \
   # ⬇ Redis
   pecl install /home/resource/$REDIS ; \ 

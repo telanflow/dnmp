@@ -2,11 +2,12 @@ FROM php:5.6-fpm
 
 COPY resource /home/resource
 
-ARG CHANGE_SOURCE=false
+ARG CHANGE_SOURCE=true
 ARG TIME_ZONE=UTC
 
 ARG SWOOLE=swoole-1.10.5.tgz
 ARG REDIS=redis-4.3.0.tgz
+ARG XDEBUG=xdebug-2.5.5.tgz
 
 ENV TIME_ZONE=${TIME_ZONE} LC_ALL=C.UTF-8
 
@@ -68,8 +69,8 @@ RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-di
   docker-php-ext-install -j$(nproc) gd mcrypt ldap soap xsl xmlrpc bz2 zip pcntl pdo_mysql mysqli exif bcmath calendar sockets ; \
   \
   # ⬇ XDebug
-  pecl install xdebug ; \
-  docker-php-ext-enable xdebug ; \
+  pecl install /home/resource/$XDEBUG ; \
+  echo "extension=xdebug.so" > /usr/local/etc/php/conf.d/xdebug.ini ; \
   \
   # ⬇ Redis
   pecl install /home/resource/$REDIS ; \ 

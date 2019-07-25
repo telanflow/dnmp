@@ -33,6 +33,8 @@ services:
         CHANGE_SOURCE: ${GLOBAL_CHANGE_SOURCE}
     expose:
       - "9000"
+    ports:
+      - "${PHP56_FPM_PORT}:9000"
     volumes:
       - ${WWW_DIR}:/etc/nginx/html:rw
       - ./work/components/php56/config/php.ini:/usr/local/etc/php/php.ini:ro
@@ -56,6 +58,8 @@ services:
         CHANGE_SOURCE: ${GLOBAL_CHANGE_SOURCE}
     expose:
       - "9000"
+    ports:
+      - "${PHP73_FPM_PORT}:9000"
     volumes:
       - ${WWW_DIR}:/etc/nginx/html:rw
       - ./work/components/php73/config/php.ini:/usr/local/etc/php/php.ini:ro
