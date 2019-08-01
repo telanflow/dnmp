@@ -16,7 +16,6 @@ DNMP 可以构建出基于 Docker 的 PHP 开发环境，其优势有在短时�
     PHP73：php-fpm 7.3
     MySQL：5.7
     Redis：4.0
-    ElasticSearch：7.1.0
     Tools：Alpine latest，作为辅助工具容器如计划任务备份数据等
 
 ### 目录结构
