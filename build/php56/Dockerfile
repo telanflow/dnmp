@@ -21,12 +21,12 @@ RUN \
   chmod 755 /usr/local/bin/composer ; \
   \
   # ⬇ 替换源
-  rm -rf /etc/apt/sources.list.d/buster.list \ 
+  rm -rf /etc/apt/sources.list.d/buster.list ; \
   if [ ${CHANGE_SOURCE} = true ]; then \
   mv /etc/apt/sources.list /etc/apt/source.list.bak ; \
   mv /home/resource/sources.list /etc/apt/sources.list ; \
   composer config -g repo.packagist composer https://mirrors.aliyun.com/composer/ ; \
-  fi \
+  fi; \
   \
   # ⬇ 更新、安装基础组件
   apt-get update && apt-get install -y --no-install-recommends \
