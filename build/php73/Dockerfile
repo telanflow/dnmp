@@ -30,7 +30,7 @@ RUN \
   fi; \
   \
   # ⬇ 更新、安装基础组件
-  apt-get update && apt-get install -y --allow-remove-essential --no-install-recommends \
+  apt-get update --fix-missing && apt-get install -y --allow-remove-essential --no-install-recommends \
   procps \
   libtinfo5 \
   libpq-dev \

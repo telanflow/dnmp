@@ -29,7 +29,7 @@ RUN \
   fi; \
   \
   # ⬇ 更新、安装基础组件
-  apt-get update && apt-get install -y --no-install-recommends \
+  apt-get update --fix-missing && apt-get install -y --no-install-recommends \
   libfreetype6-dev \
   libjpeg62-turbo-dev \
   libjpeg-dev \
