@@ -96,7 +96,7 @@ DNMP 可以构建出基于 Docker 的 PHP 开发环境，其优势有在短时�
 
         // 连接 MySQL
         $user = "root";
-        $pass = "DNMP";
+        $pass = "root";
         $dbh = new PDO('mysql:host=mysql;dbname=mysql', $user, $pass);
         
         foreach($dbh->query('SELECT * from user') as $row) {
@@ -110,14 +110,6 @@ DNMP 可以构建出基于 Docker 的 PHP 开发环境，其优势有在短时�
         $redis->connect('redis', 6379);
         $redis->set("test-key","hello");
         echo "Stored string in redis:: " . $redis->get("test-key");
-
-### XDebug 管理
-
-- Google 浏览器安装 Xdebug 插件：[xdebug-helper](https://github.com/mac-cain13/xdebug-helper-for-chrome)
-
-- PHPStrom 默认配置就可以，打断点开始调试，默认不需要添加参数
-
-- Postman 断点调试（API接口），直接在后面增加`?XDEBUG_SESSION_START=PHPSTORM`参数，即：`https://telan.me?XDEBUG_SESSION_START=PHPSTORM`
 
 ### 如何使用 Tools 组件里的计划任务？
 
