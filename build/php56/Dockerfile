@@ -30,23 +30,12 @@ RUN \
   \
   # ⬇ 更新、安装基础组件
   apt-get update && apt-get install -y --no-install-recommends \
-  libfreetype6-dev \
-  libjpeg62-turbo-dev \
-  libjpeg-dev \
-  libpng-dev \
-  zlib1g-dev \
   graphicsmagick \
   libgraphicsmagick1-dev \
   imagemagick \
   libmagickwand-dev \
-  libssh2-1-dev \
   libzip-dev \
-  libzookeeper-mt-dev \
-  libldb-dev \
-  libldap2-dev \
   libssl-dev \
-  libmosquitto-dev \
-  librabbitmq-dev \
   libicu-dev \
   libxml2-dev \
   libxslt-dev \
@@ -54,8 +43,16 @@ RUN \
   iputils-ping \
   libmcrypt-dev \
   libmhash-dev \
+  procps \
+  libtinfo5 \
+  libpq-dev \
+  libfreetype6-dev \
+  libjpeg62-turbo-dev \
+  libpng-dev \
+  ntpdate \
   cron \
   vim \
+  zip \
   unzip \
   git \
   wget ;
@@ -67,9 +64,9 @@ RUN \
 RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ ; \
   docker-php-ext-configure ldap --with-libdir=lib/x86_64-linux-gnu/ ; \
   docker-php-ext-install -j$(nproc) gd mcrypt ldap soap xsl xmlrpc bz2 zip pcntl pdo_mysql mysqli exif bcmath calendar sockets ; \
-  \
+  #\
   # ⬇ XDebug
-  pecl install /home/resource/$XDEBUG ; \
+  # pecl install /home/resource/$XDEBUG ; \
   \
   # ⬇ Redis
   pecl install /home/resource/$REDIS ; \ 
