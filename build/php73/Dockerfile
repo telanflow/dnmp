@@ -31,6 +31,29 @@ RUN \
   \
   # ⬇ 更新、安装基础组件
   apt-get update && apt-get install -y --allow-remove-essential --no-install-recommends \
+  # tools
+  wget \
+  zip \
+  unzip \
+  git \
+  cron \
+  vim \
+  iputils-ping \
+  # intl
+  libicu-dev \
+  # bz2
+  libbz2-dev \
+  # zip
+  libzip-dev \
+  # ldap
+  libldb-dev \
+  libldap2-dev \
+  # soap xsl xmlrpc wddx
+  libxml2-dev \
+  libxslt-dev \
+  # mcrypt
+  libmcrypt-dev \
+  # other
   procps \
   libtinfo5 \
   libpq-dev \
@@ -38,32 +61,21 @@ RUN \
   libfreetype6-dev \
   libjpeg62-turbo-dev \
   zlib1g-dev \
-  libzip-dev \
-  libbz2-dev \
   libpng-dev \
-  libmcrypt-dev \
   libmhash-dev \
   libssl-dev \
   librabbitmq-dev \
-  iputils-ping \
-  ntpdate \
-  cron \
-  vim \
-  unzip \
-  git \
-  wget ;
+  ntpdate ;
 
 ####################################################################################
 # 安装 PHP 扩展
 ####################################################################################
 
-RUN docker-php-ext-configure gd \
-  --with-freetype-dir=/usr/include/ \
-  --with-jpeg-dir=/usr/include/ ; \
-  docker-php-ext-install -j$(nproc) gd pdo_mysql ldap mysqli bz2 zip sockets pgsql pcntl pdo_pgsql bcmath soap ; \
-  \
+RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ ; \
+  docker-php-ext-install gd intl pdo_mysql ldap mysqli bz2 zip sockets pgsql pcntl pdo_pgsql bcmath soap ; \
+  # \
   # ⬇ XDebug
-  pecl install /home/resource/$XDEBUG ; \
+  # pecl install /home/resource/$XDEBUG ; \
   \
   # ⬇ Redis
   pecl install /home/resource/$REDIS ; \ 

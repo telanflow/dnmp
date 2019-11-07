@@ -44,8 +44,11 @@ DNMP 可以构建出基于 Docker 的 PHP 开发环境，其优势有在短时�
     # 配置数据库密码、时区、端口等
     vim .env
 
-    # 构建镜像并启动容器
-    sudo docker-compose up --build -d --no-cache
+    # 构建全部镜像并启动容器
+    sudo docker-compose up --build -d
+
+    # 构建单个镜像并启动容器
+    sudo docker-compose build --d --no-cache [nginx|php56|php73| ...]
 
 启动成功访问 http://localhost 即可
 

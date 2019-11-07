@@ -30,40 +30,58 @@ RUN \
   \
   # ⬇ 更新、安装基础组件
   apt-get update && apt-get install -y --no-install-recommends \
+  # tools
+  wget \
+  zip \
+  unzip \
+  git \
+  cron \
+  vim \
+  iputils-ping \
+  # gd
+  libfreetype6-dev \
+  libjpeg62-turbo-dev \
+  libpng-dev \
+  # intl
+  libicu-dev \
+  # soap xsl xmlrpc wddx
+  libxml2-dev \
+  libxslt-dev \
+  # bz2
+  libbz2-dev \
+  # mcrypt
+  libmcrypt-dev \
+  # zip
+  libzip-dev \
+  # readline
+  #libreadline-dev \
+  # snmp
+  #libsnmp-dev \
+  #snmp \
+  # ldap
+  libldb-dev \
+  libldap2-dev \
+  # other
   graphicsmagick \
   libgraphicsmagick1-dev \
   imagemagick \
   libmagickwand-dev \
-  libzip-dev \
   libssl-dev \
-  libicu-dev \
-  libxml2-dev \
-  libxslt-dev \
-  libbz2-dev \
-  iputils-ping \
-  libmcrypt-dev \
   libmhash-dev \
   procps \
   libtinfo5 \
   libpq-dev \
-  libfreetype6-dev \
-  libjpeg62-turbo-dev \
-  libpng-dev \
-  ntpdate \
-  cron \
-  vim \
-  zip \
-  unzip \
-  git \
-  wget ;
+  ntpdate ;
 
 ####################################################################################
 # 安装 PHP 扩展
 ####################################################################################
 
 RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ ; \
-  docker-php-ext-configure ldap --with-libdir=lib/x86_64-linux-gnu/ ; \
-  docker-php-ext-install -j$(nproc) gd mcrypt ldap soap xsl xmlrpc bz2 zip pcntl pdo_mysql mysqli exif bcmath calendar sockets ; \
+  docker-php-ext-install gd intl soap xsl xmlrpc wddx \
+  bz2 zip pcntl pdo_mysql mysqli mbstring exif \
+  bcmath calendar sockets gettext shmop \
+  sysvmsg sysvsem sysvshm mcrypt ldap ; \
   #\
   # ⬇ XDebug
   # pecl install /home/resource/$XDEBUG ; \
