@@ -22,15 +22,17 @@ RUN \
   chmod 755 /usr/local/bin/composer ; \
   \
   # ⬇ 替换源
-  rm -rf /etc/apt/sources.list.d/buster.list \ 
+  rm -rf /etc/apt/sources.list.d/buster.list ; \
   if [ ${CHANGE_SOURCE} = true ]; then \
-  mv /etc/apt/sources.list /etc/apt/source.list.bak ; \
-  mv /home/resource/sources.list /etc/apt/sources.list ; \
-  composer config -g repo.packagist composer https://mirrors.aliyun.com/composer/ ; \
-  fi \
+    mv /etc/apt/sources.list /etc/apt/source.list.bak; \ 
+    mv /home/resource/sources.list /etc/apt/sources.list; \
+    composer config -g repo.packagist composer https://mirrors.aliyun.com/composer/ ; \
+  fi; \
   \
   # ⬇ 更新、安装基础组件
-  apt-get update && apt-get install -y --allow-remove-essential --no-install-recommends \
+  apt-get update; \
+  apt-get upgrade -y; \
+  apt-get install -y --allow-remove-essential --no-install-recommends \
   # tools
   wget \
   zip \
@@ -39,6 +41,9 @@ RUN \
   cron \
   vim \
   iputils-ping \
+  \
+  libmagickwand-dev \
+  libz-dev \
   # intl
   libicu-dev \
   # bz2
@@ -54,16 +59,19 @@ RUN \
   # mcrypt
   libmcrypt-dev \
   # other
-  procps \
   libtinfo5 \
   libpq-dev \
+  libjpeg-dev \
+  libpng-dev \
+  libfreetype6-dev \
+  libssl-dev \
   libxml++2.6-dev \
   libfreetype6-dev \
   libjpeg62-turbo-dev \
   zlib1g-dev \
   libpng-dev \
+  procps \
   libmhash-dev \
-  libssl-dev \
   librabbitmq-dev \
   ntpdate ;
 
@@ -72,10 +80,13 @@ RUN \
 ####################################################################################
 
 RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ ; \
-  docker-php-ext-install gd intl pdo_mysql ldap mysqli bz2 zip sockets pgsql pcntl pdo_pgsql bcmath soap ; \
+  docker-php-ext-install -j$(nproc) gd intl pdo_mysql ldap mysqli bz2 zip sockets pgsql pdo_pgsql bcmath soap pcntl; \
   # \
   # ⬇ XDebug
   # pecl install /home/resource/$XDEBUG ; \
+  \
+  # ⬇ Imagick
+  pecl install imagick && docker-php-ext-enable imagick; \
   \
   # ⬇ Redis
   pecl install /home/resource/$REDIS ; \ 
