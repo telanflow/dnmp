@@ -7,12 +7,11 @@ ARG TIME_ZONE=UTC
 
 ARG SWOOLE=swoole-4.3.4.tgz
 ARG REDIS=redis-4.3.0.tgz
-ARG MCRYPT=mcrypt-1.0.2.tgz
-ARG XDEBUG=xdebug-2.7.2.tgz
+ARG MCRYPT=mcrypt-1.0.3.tgz
 
 ENV TIME_ZONE=${TIME_ZONE} LC_ALL=C.UTF-8
 
-RUN \
+RUN set -eux; \
   # ⬇ 修改时区
   ln -snf /usr/share/zoneinfo/$TIME_ZONE /etc/localtime ; \ 
   echo $TIME_ZONE > /etc/timezone ; \
@@ -53,9 +52,6 @@ RUN \
   # ldap
   libldb-dev \
   libldap2-dev \
-  # soap xsl xmlrpc wddx
-  libxml2-dev \
-  libxslt-dev \
   # mcrypt
   libmcrypt-dev \
   # other
@@ -65,7 +61,6 @@ RUN \
   libpng-dev \
   libfreetype6-dev \
   libssl-dev \
-  libxml++2.6-dev \
   libfreetype6-dev \
   libjpeg62-turbo-dev \
   zlib1g-dev \
@@ -79,7 +74,9 @@ RUN \
 # 安装 PHP 扩展
 ####################################################################################
 
-RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ ; \
+RUN docker-php-ext-configure gd \
+  --with-freetype-dir=/usr/include/ \
+  --with-jpeg-dir=/usr/include/ ; \
   docker-php-ext-install -j$(nproc) gd intl pdo_mysql ldap mysqli bz2 zip sockets pgsql pdo_pgsql bcmath soap pcntl; \
   # \
   # ⬇ XDebug

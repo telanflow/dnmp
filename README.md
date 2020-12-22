@@ -1,4 +1,4 @@
-# DNMP 1.0.2
+# DNMP 1.2
 
 DNMP 可以构建出基于 Docker 的 PHP 开发环境，其优势有在短时间内随意构建不同版本的相关服务、环境统一分布在不同服务器等，使开发者能够更专注于开发业务本身。
 
@@ -6,28 +6,24 @@ DNMP 可以构建出基于 Docker 的 PHP 开发环境，其优势有在短时�
 
 * 灵活切换适合国内的源（apt-get、php composer）
 * 组件精简易懂，学习、测试环境、生产环境均适合
-* 可能是最易用的计划任务（安装在 Tools 组件里）
 * 良好的扩展性
 
 ### 组件（容器）及相关软件版本
 
-    Ningx：1.15
+    Ningx：1.19
     PHP56：php-fpm 5.6
     PHP73：php-fpm 7.3
     MySQL：5.7
     Redis：4.0
-    Tools：Alpine latest，作为辅助工具容器如计划任务备份数据等
+    ElasticSearch：7.1.1
 
 ### 目录结构
 
     dnmp
     |----/build                  镜像构建目录
-    |----/work                   持久化目录
-    |--------/components/        组件库
-    |------------/component      组件，包括了数据、配置文件、日志等持久化数据
-    |-----------------/config    组件的配置目录
-    |-----------------/log       组件的日志目录
-    |--------/wwwroot            WEB 文件目录
+    |----/config                 配置文件目录
+    |----/data                   持久化数据目录
+    |----/www                    WEB文件目录
     |----/.env-example           配置文件
     |----/docker-compose.yml     docker compose 配置文件
 
@@ -48,7 +44,7 @@ DNMP 可以构建出基于 Docker 的 PHP 开发环境，其优势有在短时�
     sudo docker-compose up --build -d
 
     # 构建单个镜像并启动容器
-    sudo docker-compose build --d --no-cache [nginx|php56|php73| ...]
+    sudo docker-compose build --no-cache [nginx|php56|php73| ...]
 
 启动成功访问 http://localhost 即可
 
@@ -110,10 +106,6 @@ DNMP 可以构建出基于 Docker 的 PHP 开发环境，其优势有在短时�
         $redis->connect('redis', 6379);
         $redis->set("test-key","hello");
         echo "Stored string in redis:: " . $redis->get("test-key");
-
-### 如何使用 Tools 组件里的计划任务？
-
-直接在 /work/components/tools/cron.d 新建 crontab 文件或者使用自带的 task 就行了，比如做数据库备份计划，可以将备份的文件保存到 cron.d 同级 backup 目录下面，其中有几个坑都趟平了可以看下 task 文件里的注释说明，另外不用担心容器重启后计划任务停止，只要容器在运行你的任务就在运行。
 
 ### 其他的坑
 

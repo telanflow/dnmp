@@ -18,9 +18,13 @@
 
 		.desc {
 			text-align: center;
-			color: #ccc;
+			color: #aaa;
 			margin-bottom: 50px;
 			line-height: 30px;
+		}
+		.subtitle{
+			color: #aaa;
+			font-size: 20px;
 		}
 
 		footer {
@@ -43,12 +47,15 @@
 
 <body>
 
-	<p align="center" class="mine">DNMP</p>
-
-	<p class="desc">
-		Version：1.0.2<br />
-		Time：<?= date_default_timezone_get() . "&nbsp;/&nbsp;" . date("Y-m-d H:i:s"); ?>
+	<p align="center" class="mine">
+	<span>DNMP</span>
+	<span class="subtitle">v1.2</span>
 	</p>
+
+	<div class="desc" align="center">
+		<div style="color:#333;"><?= date_default_timezone_get() . "&nbsp;/&nbsp;" . date("Y-m-d H:i:s"); ?></div>
+		<div>PHP Version: <?php echo PHP_VERSION; ?></div>
+	</div>
 
 	<footer>
 		<a href="https://github.com/telanflow/dnmp" target="_blank">Get Documentation</a>

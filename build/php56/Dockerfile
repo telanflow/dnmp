@@ -7,7 +7,6 @@ ARG TIME_ZONE=UTC
 
 ARG SWOOLE=swoole-1.10.5.tgz
 ARG REDIS=redis-4.3.0.tgz
-ARG XDEBUG=xdebug-2.5.5.tgz
 
 ENV TIME_ZONE=${TIME_ZONE} LC_ALL=C.UTF-8
 
@@ -62,10 +61,10 @@ RUN \
   libldb-dev \
   libldap2-dev \
   # other
-  graphicsmagick \
-  libgraphicsmagick1-dev \
-  imagemagick \
-  libmagickwand-dev \
+  # graphicsmagick \
+  # libgraphicsmagick1-dev \
+  # imagemagick \
+  # libmagickwand-dev \
   libssl-dev \
   libmhash-dev \
   procps \

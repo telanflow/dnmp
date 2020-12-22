@@ -2,27 +2,26 @@ version: "3"
 
 services:
   ### Nginx container #########################################
-
   nginx:
     container_name: dnmp-nginx
-    image: nginx:1.15
+    image: nginx:1.19
     ports:
       - "${HTTP_PORT}:80"
       - "${HTTPS_PORT}:443"
     volumes:
       - ${WWW_DIR}:/etc/nginx/html/:rw
-      - ./work/components/nginx/config/nginx.conf:/etc/nginx/nginx.conf:ro
-      - ./work/components/nginx/config/vhost:/etc/nginx/conf.d:ro
-      - ./work/components/nginx/config/rewrite:/etc/nginx/rewrite:ro
-      - ./work/components/nginx/log:/var/log/nginx:rw
+      - ./config/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./config/nginx/vhost:/etc/nginx/conf.d:ro
+      - ./config/nginx/rewrite:/etc/nginx/rewrite:ro
+      - ./log/nginx:/var/log/nginx:rw
     restart: always
     privileged: true
+    environment:
+      TZ: "$GLOBAL_TIME_ZONE"
     networks:
-      - net-php56
-      - net-php73
+      - default
 
   ### PHP container #########################################
-
   php56:
     container_name: dnmp-php56
     build:
@@ -30,22 +29,19 @@ services:
       args:
         TIME_ZONE: ${GLOBAL_TIME_ZONE}
         CHANGE_SOURCE: ${GLOBAL_CHANGE_SOURCE}
-    expose:
-      - "9000"
     ports:
       - "${PHP56_FPM_PORT}:9000"
     volumes:
       - ${WWW_DIR}:/etc/nginx/html:rw
-      - ./work/components/php56/config/php.ini:/usr/local/etc/php/php.ini:ro
-      - ./work/components/php56/config/php-fpm.conf:/usr/local/etc/php-fpm.d/www.conf:rw
-      - ./work/components/php56/log:/var/log:rw
+      - ./config/php56/php.ini:/usr/local/etc/php/php.ini:ro
+      - ./config/php56/php-fpm.conf:/usr/local/etc/php-fpm.d/www.conf:rw
+      - ./log/php56:/var/log:rw
     restart: always
     privileged: true
+    environment:
+      TZ: "$GLOBAL_TIME_ZONE"
     networks:
-      - net-php56
-      - net-php73
-      - net-mysql
-      - net-redis
+      - default
 
   php73:
     container_name: dnmp-php73
@@ -54,79 +50,102 @@ services:
       args:
         TIME_ZONE: ${GLOBAL_TIME_ZONE}
         CHANGE_SOURCE: ${GLOBAL_CHANGE_SOURCE}
-    expose:
-      - "9000"
     ports:
       - "${PHP73_FPM_PORT}:9000"
     volumes:
       - ${WWW_DIR}:/etc/nginx/html:rw
-      - ./work/components/php73/config/php.ini:/usr/local/etc/php/php.ini:ro
-      - ./work/components/php73/config/php-fpm.conf:/usr/local/etc/php-fpm.d/www.conf:rw
-      - ./work/components/php73/log:/var/log:rw
+      - ./config/php73/php.ini:/usr/local/etc/php/php.ini:ro
+      - ./config/php73/php-fpm.conf:/usr/local/etc/php-fpm.d/www.conf:rw
+      - ./log/php73:/var/log:rw
     restart: always
     privileged: true
+    environment:
+      TZ: "$GLOBAL_TIME_ZONE"
     networks:
-      - net-php56
-      - net-php73
-      - net-mysql
-      - net-redis
+      - default
 
   ### Mysql container #########################################
-
   mysql:
     container_name: dnmp-mysql
     image: mysql:5.7
     ports:
       - "${MYSQL_PORT}:3306"
     volumes:
-      - ./work/components/mysql/data:/var/lib/mysql:rw
-      - ./work/components/mysql/config/my.cnf:/etc/mysql/mysql.conf.d/mysqld.cnf:ro
-      - ./work/components/mysql/log:/var/log/mysql:rw
+      - ./data/mysql:/var/lib/mysql:rw
+      - ./config/mysql/my.cnf:/etc/mysql/conf.d/mysql.cnf:ro
+      - ./log/mysql:/var/log/mysql:rw
     restart: always
     privileged: true
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
+      TZ: "$GLOBAL_TIME_ZONE"
     networks:
-      - net-mysql
+      - default
 
   ### Redis container #########################################
-
   redis:
     container_name: dnmp-redis
     image: redis:4.0
     ports:
       - "${REDIS_PORT}:6379"
     volumes:
-      - ./work/components/redis/config/redis.conf:/usr/local/etc/redis/redis.conf:ro
-      - ./work/components/redis/log/redis.log:/var/log/redis/redis.log:rw
+      - ./config/redis/redis.conf:/usr/local/etc/redis/redis.conf:ro
+      - ./log/redis/redis.log:/var/log/redis/redis.log:rw
+      - ./data/redis:/data/:rw
     restart: always
     privileged: true
+    environment:
+      TZ: "$GLOBAL_TIME_ZONE"
     networks:
-      - net-redis
+      - default
 
-  ### Tools container #########################################
-
-  tools:
-    container_name: dnmp-tools
+  ### Elasticsearch container #########################################
+  es:
+    container_name: dnmp-es
     build:
-      context: ./build/tools
+      context: ./build/elasticsearch
       args:
-        TIME_ZONE: ${GLOBAL_TIME_ZONE}
-        CHANGE_SOURCE: ${GLOBAL_CHANGE_SOURCE}
+        ELASTICSEARCH_VERSION: ${ELASTICSEARCH_VERSION}
+        ELASTICSEARCH_PLUGINS: ${ELASTICSEARCH_PLUGINS}
+    environment:
+      - TZ=$GLOBAL_TIME_ZONE
+      - discovery.type=single-node
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
     volumes:
-      - ./work/components/tools/start.sh:/home/start.sh:rw
-      - ./work/components/tools/backup:/backup:rw
-      - ./work/components/tools/cron.d:/etc/cron.d:rw
+      - ./data/elasticsearch:/usr/share/elasticsearch/data
+      - ./config/elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+    hostname: es
     restart: always
-    privileged: true
+    ports:
+     - "${ELASTICSEARCH_HOST_PORT_C}:9200"
+     - "${ELASTICSEARCH_HOST_PORT_S}:9300"
     networks:
-      - net-php56
-      - net-php73
-      - net-mysql
-      - net-redis
+      - default
+  
+  ### Supervisor container ####################################
+  # supervisor:
+  #   container_name: dnmp-supervisor
+  #   build:
+  #     context: ./services/supervisor
+  #     args:
+  #       ALPINE_VERSION: alpine:${ALPINE_VERSION}
+  #       TZ: "$GLOBAL_TIME_ZONE"
+  #   ports:
+  #     - "${SUPERVISOR_HOST_PORT_C}:9001"
+  #   volumes:
+  #     - ./log/supervisor:/var/log/supervisor/:rw
+  #     - ./config/supervisor/conf.d:/etc/supervisor/conf.d/:rw
+  #     - ./config/supervisor/supervisord.conf:/etc/supervisor/supervisord.conf:ro
+  #   command:
+  #     - /bin/sh
+  #     - -c
+  #     - |
+  #       supervisord -n -c /etc/supervisor/supervisord.conf
+  #   restart: always
+  #   cap_add:
+  #     - SYS_PTRACE
+  #   networks:
+  #     - default
 
 networks:
-  net-php56:
-  net-php73:
-  net-mysql:
-  net-redis:
+  default:
