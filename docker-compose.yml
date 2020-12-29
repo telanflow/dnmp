@@ -100,27 +100,27 @@ services:
       - default
 
   ### Elasticsearch container #########################################
-  es:
-    container_name: dnmp-es
-    build:
-      context: ./build/elasticsearch
-      args:
-        ELASTICSEARCH_VERSION: ${ELASTICSEARCH_VERSION}
-        ELASTICSEARCH_PLUGINS: ${ELASTICSEARCH_PLUGINS}
-    environment:
-      - TZ=$GLOBAL_TIME_ZONE
-      - discovery.type=single-node
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-    volumes:
-      - ./data/elasticsearch:/usr/share/elasticsearch/data
-      - ./config/elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
-    hostname: es
-    restart: always
-    ports:
-     - "${ELASTICSEARCH_HOST_PORT_C}:9200"
-     - "${ELASTICSEARCH_HOST_PORT_S}:9300"
-    networks:
-      - default
+  # es:
+  #   container_name: dnmp-es
+  #   build:
+  #     context: ./build/elasticsearch
+  #     args:
+  #       ELASTICSEARCH_VERSION: ${ELASTICSEARCH_VERSION}
+  #       ELASTICSEARCH_PLUGINS: ${ELASTICSEARCH_PLUGINS}
+  #   environment:
+  #     - TZ=$GLOBAL_TIME_ZONE
+  #     - discovery.type=single-node
+  #     - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+  #   volumes:
+  #     - ./data/elasticsearch:/usr/share/elasticsearch/data
+  #     - ./config/elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+  #   hostname: es
+  #   restart: always
+  #   ports:
+  #    - "${ELASTICSEARCH_HOST_PORT_C}:9200"
+  #    - "${ELASTICSEARCH_HOST_PORT_S}:9300"
+  #   networks:
+  #     - default
   
   ### Supervisor container ####################################
   # supervisor:
