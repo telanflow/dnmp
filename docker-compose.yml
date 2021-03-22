@@ -64,6 +64,27 @@ services:
     networks:
       - default
 
+  php74:
+    container_name: dnmp-php74
+    build:
+      context: ./build/php74
+      args:
+        TIME_ZONE: ${GLOBAL_TIME_ZONE}
+        CHANGE_SOURCE: ${GLOBAL_CHANGE_SOURCE}
+    ports:
+      - "${PHP74_FPM_PORT}:9000"
+    volumes:
+      - ${WWW_DIR}:/etc/nginx/html:rw
+      - ./config/php74/php.ini:/usr/local/etc/php/php.ini:ro
+      - ./config/php74/php-fpm.conf:/usr/local/etc/php-fpm.d/www.conf:rw
+      - ./log/php74:/var/log:rw
+    restart: always
+    privileged: true
+    environment:
+      TZ: "$GLOBAL_TIME_ZONE"
+    networks:
+      - default
+
   ### Mysql container #########################################
   mysql:
     container_name: dnmp-mysql
