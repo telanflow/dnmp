@@ -5,7 +5,7 @@ COPY resource /home/resource
 ARG CHANGE_SOURCE=true
 ARG TIME_ZONE=UTC
 
-ARG SWOOLE=swoole-4.3.4.tgz
+ARG SWOOLE=swoole-4.5.11.tgz
 ARG REDIS=redis-4.3.0.tgz
 ARG MCRYPT=mcrypt-1.0.3.tgz
 
