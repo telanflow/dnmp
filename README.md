@@ -10,12 +10,12 @@ DNMP 可以构建出基于 Docker 的 PHP 开发环境，其优势有在短时�
 
 ### 组件（容器）及相关软件版本
 
-    Ningx：1.19
-    PHP56：php-fpm 5.6
-    PHP73：php-fpm 7.3
-    MySQL：5.7
-    Redis：4.0
-    ~~ElasticSearch：7.1.1~~
+* Ningx：1.19
+* PHP56：php-fpm 5.6
+* PHP73：php-fpm 7.3
+* MySQL：5.7
+* Redis：4.0
+* ~~ElasticSearch：7.1.1~~
 
 ### 目录结构
 
