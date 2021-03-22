@@ -20,7 +20,7 @@ RUN \
   chmod 755 /usr/local/bin/composer ; \
   \
   # ⬇ 替换源
-  rm -rf /etc/apt/sources.list.d/buster.list \ 
+  rm -rf /etc/apt/sources.list.d/buster.list ; \ 
   if [ ${CHANGE_SOURCE} = true ]; then \
   mv /etc/apt/sources.list /etc/apt/source.list.bak ; \
   mv /home/resource/sources.list /etc/apt/sources.list ; \
