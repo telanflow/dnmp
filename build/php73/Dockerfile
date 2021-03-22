@@ -7,7 +7,7 @@ ARG TIME_ZONE=UTC
 
 ARG SWOOLE=swoole-4.5.11.tgz
 ARG REDIS=redis-4.3.0.tgz
-ARG MCRYPT=mcrypt-1.0.3.tgz
+ARG MCRYPT=mcrypt-1.0.4.tgz
 
 ENV TIME_ZONE=${TIME_ZONE} LC_ALL=C.UTF-8
 
