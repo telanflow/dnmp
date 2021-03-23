@@ -67,7 +67,7 @@ DNMP 可以构建出基于 Docker 的 PHP 开发环境，其优势有在短时�
     sudo docker rm $(sudo docker ps -a -q)
 
     # 删除所有未运行的镜像，-f 可以强制删除
-    sudo docker rmi $(docker images -q)
+    sudo docker rmi $(sudo docker images -q)
 
     # 删除dnmp
     sudo docker rm $(sudo docker ps -a | grep dnmp | awk '{print $1}')
@@ -75,7 +75,29 @@ DNMP 可以构建出基于 Docker 的 PHP 开发环境，其优势有在短时�
     # ⚠️清理所有停止的容器（注意如果执行 docker images -a 会出现一些 none 的镜像，这些是构建镜像的中间层不占用空间也不是垃圾数据，不用管）
     sudo docker system prune
 
+    # 进入容器
+    docker exec -it [dnmp-nginx|dnmp-redis|dnmp-php73|dnmp-php74| ...] bash
+
 更多可通过 `sudo docker -h` 或者 `sudo docker-compose -h` 查看
+
+### 容器内目录映射
+
+```
+# Nginx
+/etc/nginx          配置文件目录
+/etc/nginx/html     .env文件中的 WWW_DIR
+
+# PHP
+/etc/nginx/html     .env文件中的 WWW_DIR
+/usr/local/etc      配置文件目录 `部分文件已经映射到config目录下`
+
+# Mysql
+/etc/mysql           配置文件目录
+
+# Redis
+/usr/local/etc/redis 配置文件目录
+
+```
 
 ### 修改镜像文件怎么处理？
     
