@@ -94,7 +94,6 @@ services:
       - ./config/mysql/my.cnf:/etc/mysql/conf.d/mysql.cnf:ro
       - ./log/mysql:/var/log/mysql:rw
     restart: always
-    privileged: true
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
       TZ: "$GLOBAL_TIME_ZONE"
