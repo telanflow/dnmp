@@ -45,6 +45,9 @@ DNMP 可以构建出基于 Docker 的 PHP 开发环境，其优势有在短时�
     sudo docker-compose up --build -d
 
     # 构建单个镜像并启动容器
+    sudo docker-compose up --build -d [nginx|php56|php74|php8 ...]
+
+    # 构建单个镜像
     sudo docker-compose build --no-cache [nginx|php56|php74|php8 ...]
 
 启动成功访问 http://localhost 即可
@@ -55,10 +58,16 @@ DNMP 可以构建出基于 Docker 的 PHP 开发环境，其优势有在短时�
     sudo docker-compose ps
     
     # 启动部分服务在后边加服务名，不加表示启动所有，-d 表示在后台运行
-    sudo docker-compose up [nginx|php56|php74|php8 ...] -d
+    sudo docker-compose up -d [nginx|php56|php74|php8 ...]
     
-    # 停止和启动类似
+    # 启动容器
+    sudo docker-compose start [nginx|php56|php74|php8 ...]
+
+    # 停止容器
     sudo docker-compose stop [nginx|php56|php74|php8 ...]
+
+    # 重启容器
+    sudo docker-compose restart [nginx|php56|php74|php8 ...]
 
     # 停止并删除相关的容器
     sudo docker-compose down [nginx|php56|php74|php8 ...]
