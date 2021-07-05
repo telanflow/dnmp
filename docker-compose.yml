@@ -41,27 +41,6 @@ services:
     networks:
       - default
 
-  php73:
-    container_name: dnmp-php73
-    build:
-      context: ./build/php73
-      args:
-        TIME_ZONE: ${GLOBAL_TIME_ZONE}
-        CHANGE_SOURCE: ${GLOBAL_CHANGE_SOURCE}
-    ports:
-      - "${PHP73_FPM_PORT}:9000"
-    volumes:
-      - ${WWW_DIR}:/etc/nginx/html:rw
-      - ./config/php73/php.ini:/usr/local/etc/php/php.ini:ro
-      - ./config/php73/php-fpm.conf:/usr/local/etc/php-fpm.d/www.conf:rw
-      - ./log/php73:/var/log:rw
-    restart: always
-    privileged: true
-    environment:
-      TZ: "$GLOBAL_TIME_ZONE"
-    networks:
-      - default
-
   php74:
     container_name: dnmp-php74
     build:
@@ -76,6 +55,27 @@ services:
       - ./config/php74/php.ini:/usr/local/etc/php/php.ini:ro
       - ./config/php74/php-fpm.conf:/usr/local/etc/php-fpm.d/www.conf:rw
       - ./log/php74:/var/log:rw
+    restart: always
+    privileged: true
+    environment:
+      TZ: "$GLOBAL_TIME_ZONE"
+    networks:
+      - default
+
+  php8:
+    container_name: dnmp-php8
+    build:
+      context: ./build/php8
+      args:
+        TIME_ZONE: ${GLOBAL_TIME_ZONE}
+        CHANGE_SOURCE: ${GLOBAL_CHANGE_SOURCE}
+    ports:
+      - "${PHP8_FPM_PORT}:9000"
+    volumes:
+      - ${WWW_DIR}:/etc/nginx/html:rw
+      - ./config/php8/php.ini:/usr/local/etc/php/php.ini:ro
+      - ./config/php8/php-fpm.conf:/usr/local/etc/php-fpm.d/www.conf:rw
+      - ./log/php8:/var/log:rw
     restart: always
     privileged: true
     environment:

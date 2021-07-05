@@ -1,12 +1,12 @@
-FROM php:7.3-fpm
+FROM php:8.0-fpm
 
 COPY resource /home/resource
 
 ARG CHANGE_SOURCE=true
 ARG TIME_ZONE=UTC
 
-ARG SWOOLE=swoole-4.5.11.tgz
-ARG REDIS=redis-4.3.0.tgz
+ARG SWOOLE=swoole-4.6.7.tgz
+ARG REDIS=redis-5.3.4.tgz
 ARG MCRYPT=mcrypt-1.0.4.tgz
 
 ENV TIME_ZONE=${TIME_ZONE} LC_ALL=C.UTF-8

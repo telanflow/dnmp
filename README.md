@@ -1,4 +1,4 @@
-# DNMP 1.2.1
+# DNMP 1.3
 
 DNMP 可以构建出基于 Docker 的 PHP 开发环境，其优势有在短时间内随意构建不同版本的相关服务、环境统一分布在不同服务器等，使开发者能够更专注于开发业务本身。
 
@@ -11,9 +11,9 @@ DNMP 可以构建出基于 Docker 的 PHP 开发环境，其优势有在短时�
 ### 组件（容器）及相关软件版本
 
 * Ningx：latest
-* PHP56：php-fpm 5.6 `composer:1.8.0 swoole:1.10.5 redis:4.3.0`
-* PHP73：php-fpm 7.3 `composer:2.0.11 swoole:4.5.11 redis:4.3.0`
-* PHP74：php-fpm 7.4 `composer:2.0.11 swoole:4.6.4 redis:5.3.3`
+* PHP56：php-fpm 5.6.x `composer:1.8.0 swoole:1.10.5 redis:4.3.0`
+* PHP74：php-fpm 7.4.x `composer:2.1.3 swoole:4.6.7 redis:5.3.4`
+* PHP8：php-fpm 8.0.x `composer:2.1.3 swoole:4.6.7 redis:5.3.4`
 * MySQL：5.7
 * Redis：latest
 * ~~ElasticSearch：7.1.1~~
@@ -45,7 +45,7 @@ DNMP 可以构建出基于 Docker 的 PHP 开发环境，其优势有在短时�
     sudo docker-compose up --build -d
 
     # 构建单个镜像并启动容器
-    sudo docker-compose build --no-cache [nginx|php56|php73|php74 ...]
+    sudo docker-compose build --no-cache [nginx|php56|php74|php8 ...]
 
 启动成功访问 http://localhost 即可
 
@@ -55,13 +55,13 @@ DNMP 可以构建出基于 Docker 的 PHP 开发环境，其优势有在短时�
     sudo docker-compose ps
     
     # 启动部分服务在后边加服务名，不加表示启动所有，-d 表示在后台运行
-    sudo docker-compose up [nginx|php56|php73|php74 ...] -d
+    sudo docker-compose up [nginx|php56|php74|php8 ...] -d
     
     # 停止和启动类似
-    sudo docker-compose stop [nginx|php56|php73|php74 ...]
+    sudo docker-compose stop [nginx|php56|php74|php8 ...]
 
     # 停止并删除相关的容器
-    sudo docker-compose down [nginx|php56|php73|php74 ...]
+    sudo docker-compose down [nginx|php56|php74|php8 ...]
 
     # 删除所有未运行的容器
     sudo docker rm $(sudo docker ps -a -q)
@@ -76,7 +76,7 @@ DNMP 可以构建出基于 Docker 的 PHP 开发环境，其优势有在短时�
     sudo docker system prune
 
     # 进入容器
-    docker exec -it [dnmp-nginx|dnmp-redis|dnmp-php73|dnmp-php74| ...] bash
+    docker exec -it [dnmp-nginx|dnmp-redis|dnmp-php74|dnmp-php8| ...] bash
 
 更多可通过 `sudo docker -h` 或者 `sudo docker-compose -h` 查看
 
@@ -105,7 +105,7 @@ DNMP 可以构建出基于 Docker 的 PHP 开发环境，其优势有在短时�
 
     # 1、更改对应的 dnmp/build/php/Dockerfile
     # 2、重新构建镜像
-    sudo docker-compose build --no-cache [php56|php73|php74 ...]
+    sudo docker-compose build --no-cache [php56|php74|php8 ...]
 
 ### 如何在 php 里连接 MySQL 和 Redis？
 
