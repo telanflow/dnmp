@@ -15,7 +15,7 @@ DNMP 可以构建出基于 Docker 的 PHP 开发环境，其优势有在短时�
 * PHP74：php-fpm 7.4.x `composer:2.1.3 swoole:4.6.7 redis:5.3.4`
 * PHP8：php-fpm 8.0.x `composer:2.1.3 swoole:4.6.7 redis:5.3.4`
 * MySQL：5.7
-* Redis：latest
+* Redis：latest `默认密码：dnmp`
 * ~~ElasticSearch：7.1.1~~
 
 ### 目录结构
@@ -50,7 +50,7 @@ DNMP 可以构建出基于 Docker 的 PHP 开发环境，其优势有在短时�
     # 构建单个镜像
     sudo docker-compose build --no-cache [nginx|php56|php74|php8 ...]
 
-> 📢：注意！！dnmp部署完成后，需要修改redis服务的密码`config/redis/redis.conf 设置 requirepass 你的密码`。（否则redis允许公网任意人员访问）
+> 📢 注意：dnmp部署完成后，需要修改redis服务的密码`config/redis/redis.conf 设置 requirepass dnmp（替换成你自己的密码）`
 
 启动成功访问 http://localhost 即可
 
