@@ -1,4 +1,4 @@
-FROM php:5.6-fpm-buster
+FROM php:5.6-fpm
 
 COPY resource /home/resource
 
