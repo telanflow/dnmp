@@ -116,6 +116,27 @@ services:
     networks:
       - default
 
+  ### mongodb container #########################################
+  mongodb:
+    container_name: dnmp-mongodb
+    image:  mongo:latest
+    ports:
+      - "${MONGODB_PORT}:27017"
+    environment:
+        MONGO_INITDB_ROOT_USERNAME: "${MONGODB_INITDB_ROOT_USERNAME}"
+        MONGO_INITDB_ROOT_PASSWORD: "${MONGODB_INITDB_ROOT_PASSWORD}"
+        TZ: "$GLOBAL_TIME_ZONE"
+    volumes:
+      - ./data/mongodb/db:/data/db:rw
+      - ./data/mongodb/log:/var/log/mongodb:rw
+    restart: always
+    privileged: true
+    command:
+      --auth
+    networks:
+      - default
+
+
   ### Elasticsearch container #########################################
   # es:
   #   container_name: dnmp-es

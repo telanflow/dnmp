@@ -16,6 +16,7 @@ DNMP 可以构建出基于 Docker 的 PHP 开发环境，其优势有在短时�
 * PHP8：php-fpm 8.0.x `composer:2.1.3 swoole:4.6.7 redis:5.3.4`
 * MySQL：5.7
 * Redis：latest `默认密码：dnmp`
+* Mogodb:  latest `默认验证数据库：admin;账号：admin;密码：admin`
 * ~~ElasticSearch：7.1.1~~
 
 ### 目录结构
@@ -34,19 +35,19 @@ DNMP 可以构建出基于 Docker 的 PHP 开发环境，其优势有在短时�
 
     cd ~/
     git clone https://github.com/telanflow/dnmp.git
-
+    
     cd dnmp
     cp .env-example .env
-
+    
     # 配置数据库密码、时区、端口等
     vim .env
-
+    
     # 构建全部镜像并启动容器
     sudo docker-compose up --build -d
-
+    
     # 构建单个镜像并启动容器
     sudo docker-compose up --build -d [nginx|php56|php74|php8 ...]
-
+    
     # 构建单个镜像
     sudo docker-compose build --no-cache [nginx|php56|php74|php8 ...]
 
@@ -64,28 +65,28 @@ DNMP 可以构建出基于 Docker 的 PHP 开发环境，其优势有在短时�
     
     # 启动容器
     sudo docker-compose start [nginx|php56|php74|php8 ...]
-
+    
     # 停止容器
     sudo docker-compose stop [nginx|php56|php74|php8 ...]
-
+    
     # 重启容器
     sudo docker-compose restart [nginx|php56|php74|php8 ...]
-
+    
     # 停止并删除相关的容器
     sudo docker-compose down [nginx|php56|php74|php8 ...]
-
+    
     # 删除所有未运行的容器
     sudo docker rm $(sudo docker ps -a -q)
-
+    
     # 删除所有未运行的镜像，-f 可以强制删除
     sudo docker rmi $(sudo docker images -q)
-
+    
     # 删除dnmp
     sudo docker rm $(sudo docker ps -a | grep dnmp | awk '{print $1}')
-
+    
     # ⚠️清理所有停止的容器（注意如果执行 docker images -a 会出现一些 none 的镜像，这些是构建镜像的中间层不占用空间也不是垃圾数据，不用管）
     sudo docker system prune
-
+    
     # 进入容器
     docker exec -it [dnmp-nginx|dnmp-redis|dnmp-php74|dnmp-php8| ...] bash
 
@@ -111,7 +112,7 @@ DNMP 可以构建出基于 Docker 的 PHP 开发环境，其优势有在短时�
 ```
 
 ### 修改镜像文件怎么处理？
-    
+
 比如在 php 里新增一个扩展
 
     # 1、更改对应的 dnmp/build/php/Dockerfile
@@ -121,9 +122,9 @@ DNMP 可以构建出基于 Docker 的 PHP 开发环境，其优势有在短时�
 ### 如何在 php 里连接 MySQL 和 Redis？
 
     <?php
-
+    
         echo "<pre>";
-
+    
         // 连接 MySQL
         $user = "root";
         $pass = "root";
@@ -132,14 +133,18 @@ DNMP 可以构建出基于 Docker 的 PHP 开发环境，其优势有在短时�
         foreach($dbh->query('SELECT * from user') as $row) {
             print_r($row);
         }
-
+    
         echo "<br />";
-
+    
         // 连接 Redis
         $redis = new Redis();
         $redis->connect('redis', 6379);
         $redis->set("test-key","hello");
         echo "Stored string in redis:: " . $redis->get("test-key");
+        
+        // 连接 Mongodb
+        $manager = new MongoDB\Driver\Manager("mongodb://mongodb:27017");
+        
 
 ### 其他的坑
 
@@ -148,7 +153,7 @@ DNMP 可以构建出基于 Docker 的 PHP 开发环境，其优势有在短时�
 ## 安装 Docker 及相关工具
 
 ### 安装 docker（2选1）
-    
+
 1、参考 daocloud 提供的文档（推荐）
 
     # 注意按照文档如果执行类似 install docker-ce=17.03.1* 出错，执行 install docker-ce 即可
@@ -157,9 +162,9 @@ DNMP 可以构建出基于 Docker 的 PHP 开发环境，其优势有在短时�
 2、ubuntu 系统（可能不是最新版本的，适合学习或者测试用）
 
     apt-get update && apt install docker.io    
-    
+
 ### 安装 docker-compose
-    
+
     sudo curl -L "https://github.com/docker/compose/releases/download/1.23.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
     
     sudo chmod +x /usr/local/bin/docker-compose
