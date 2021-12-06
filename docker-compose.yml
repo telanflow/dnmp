@@ -62,20 +62,20 @@ services:
     networks:
       - default
 
-  php8:
-    container_name: dnmp-php8
+  php80:
+    container_name: dnmp-php80
     build:
-      context: ./build/php8
+      context: ./build/php80
       args:
         TIME_ZONE: ${GLOBAL_TIME_ZONE}
         CHANGE_SOURCE: ${GLOBAL_CHANGE_SOURCE}
     ports:
-      - "${PHP8_FPM_PORT}:9000"
+      - "${PHP80_FPM_PORT}:9000"
     volumes:
       - ${WWW_DIR}:/etc/nginx/html:rw
-      - ./config/php8/php.ini:/usr/local/etc/php/php.ini:ro
-      - ./config/php8/php-fpm.conf:/usr/local/etc/php-fpm.d/www.conf:rw
-      - ./log/php8:/var/log:rw
+      - ./config/php80/php.ini:/usr/local/etc/php/php.ini:ro
+      - ./config/php80/php-fpm.conf:/usr/local/etc/php-fpm.d/www.conf:rw
+      - ./log/php80:/var/log:rw
     restart: always
     privileged: true
     environment:
