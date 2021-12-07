@@ -40,10 +40,10 @@ server {
     # 
     # include /etc/nginx/rewrite/php56.conf;
     # include /etc/nginx/rewrite/php74.conf;
-    # include /etc/nginx/rewrite/php8.conf;
+    # include /etc/nginx/rewrite/php80.conf;
     # 
     location ~ \.php$ {
-        fastcgi_pass   php8:9000;
+        fastcgi_pass   php80:9000;
         fastcgi_index  index.php;
         fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
         include        fastcgi_params;
