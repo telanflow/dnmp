@@ -87,6 +87,27 @@ services:
     networks:
       - default
 
+  php81:
+    container_name: dnmp-php81
+    build:
+      context: ./build/php81
+      args:
+        TIME_ZONE: ${GLOBAL_TIME_ZONE}
+        CHANGE_SOURCE: ${GLOBAL_CHANGE_SOURCE}
+    ports:
+      - "${PHP81_FPM_PORT}:9000"
+    volumes:
+      - ${WWW_DIR}:/etc/nginx/html:rw
+      - ./config/php81/php.ini:/usr/local/etc/php/php.ini:ro
+      - ./config/php81/php-fpm.conf:/usr/local/etc/php-fpm.d/www.conf:rw
+      - ./log/php81:/var/log:rw
+    restart: always
+    privileged: true
+    environment:
+      TZ: "$GLOBAL_TIME_ZONE"
+    networks:
+      - default
+
   ### Mysql container #########################################
   mysql:
     container_name: dnmp-mysql

@@ -1,4 +1,4 @@
-# DNMP 1.3.2
+# DNMP 1.4
 
 DNMP 可以构建出基于 Docker 的 PHP 开发环境，其优势有在短时间内随意构建不同版本的相关服务、环境统一分布在不同服务器等，使开发者能够更专注于开发业务本身。
 
@@ -14,8 +14,9 @@ DNMP 可以构建出基于 Docker 的 PHP 开发环境，其优势有在短时�
 
 * Ningx：latest
 * PHP56：php-fpm 5.6.x `composer:1.8.0 swoole:1.10.5 redis:4.3.0`
-* PHP74：php-fpm 7.4.x `composer:2.1.11 swoole:4.8.3 redis:5.3.4`
-* PHP80：php-fpm 8.0.x `composer:2.1.11 swoole:4.8.3 redis:5.3.4`
+* PHP74：php-fpm 7.4.x `composer:2.1.11 swoole:4.8.5 redis:5.3.5`
+* PHP80：php-fpm 8.0.x `composer:2.1.11 swoole:4.8.5 redis:5.3.5`
+* PHP81：php-fpm 8.1.x `composer:2.1.11 swoole:4.8.5 redis:5.3.5`
 * MySQL：5.7
 * Redis：latest `默认密码：dnmp`
 * Mogodb:  latest `默认验证数据库：admin;账号：admin;密码：admin`
@@ -28,7 +29,7 @@ DNMP 可以构建出基于 Docker 的 PHP 开发环境，其优势有在短时�
     |----/config                 配置文件目录
     |----/data                   持久化数据目录
     |----/www                    WEB文件目录
-    |----/.env-example           配置文件
+    |----/.env-example           配置文件示例
     |----/docker-compose.yml     docker compose 配置文件
 
 ## 开始安装
@@ -36,7 +37,7 @@ DNMP 可以构建出基于 Docker 的 PHP 开发环境，其优势有在短时�
 没有安装 Docker 的同学移步 [安装教程](https://github.com/telanflow/dnmp.git#安装-docker-及相关工具)，如果你有足够的时间强烈建议通读 [Docker — 从入门到实践](https://yeasy.gitbooks.io/docker_practice/content/)
 
     cd ~/
-    git clone https://github.com/telanflow/dnmp.git
+    git clone --depth 1 https://github.com/telanflow/dnmp.git
     
     cd dnmp
     cp .env-example .env
@@ -48,10 +49,10 @@ DNMP 可以构建出基于 Docker 的 PHP 开发环境，其优势有在短时�
     sudo docker-compose up --build -d
     
     # 构建单个镜像并启动容器
-    sudo docker-compose up --build -d [nginx|php56|php74|php8 ...]
+    sudo docker-compose up --build -d [nginx|php56|php74|php80 ...]
     
     # 构建单个镜像
-    sudo docker-compose build --no-cache [nginx|php56|php74|php8 ...]
+    sudo docker-compose build --no-cache [nginx|php56|php74|php80 ...]
 
 > 📢 注意：dnmp部署完成后，需要修改redis服务的密码`config/redis/redis.conf 设置 requirepass dnmp（替换成你自己的密码）`
 
@@ -63,19 +64,19 @@ DNMP 可以构建出基于 Docker 的 PHP 开发环境，其优势有在短时�
     sudo docker-compose ps
     
     # 启动部分服务在后边加服务名，不加表示启动所有，-d 表示在后台运行
-    sudo docker-compose up -d [nginx|php56|php74|php8 ...]
+    sudo docker-compose up -d [nginx|php56|php74|php80 ...]
     
     # 启动容器
-    sudo docker-compose start [nginx|php56|php74|php8 ...]
+    sudo docker-compose start [nginx|php56|php74|php80 ...]
     
     # 停止容器
-    sudo docker-compose stop [nginx|php56|php74|php8 ...]
+    sudo docker-compose stop [nginx|php56|php74|php80 ...]
     
     # 重启容器
-    sudo docker-compose restart [nginx|php56|php74|php8 ...]
+    sudo docker-compose restart [nginx|php56|php74|php80 ...]
     
     # 停止并删除相关的容器
-    sudo docker-compose down [nginx|php56|php74|php8 ...]
+    sudo docker-compose down [nginx|php56|php74|php80 ...]
     
     # 删除所有未运行的容器
     sudo docker rm $(sudo docker ps -a -q)
@@ -90,7 +91,7 @@ DNMP 可以构建出基于 Docker 的 PHP 开发环境，其优势有在短时�
     sudo docker system prune
     
     # 进入容器
-    docker exec -it [dnmp-nginx|dnmp-redis|dnmp-php74|dnmp-php8| ...] bash
+    docker exec -it [dnmp-nginx|dnmp-redis|dnmp-php74|dnmp-php80| ...] bash
 
 更多可通过 `sudo docker -h` 或者 `sudo docker-compose -h` 查看
 
@@ -119,7 +120,7 @@ DNMP 可以构建出基于 Docker 的 PHP 开发环境，其优势有在短时�
 
     # 1、更改对应的 dnmp/build/php/Dockerfile
     # 2、重新构建镜像
-    sudo docker-compose build --no-cache [php56|php74|php8 ...]
+    sudo docker-compose build --no-cache [php56|php74|php80 ...]
 
 ### 如何在 php 里连接 MySQL 和 Redis？
 
@@ -183,9 +184,6 @@ DNMP 可以构建出基于 Docker 的 PHP 开发环境，其优势有在短时�
 DaoCloud 加速器：http://guide.daocloud.io/dcs/daocloud-9153151.html
 
 腾讯云加速器：https://www.qcloud.com/document/product/457/7207
-
-### 鸣谢
-[Docker LNMP 3.2](https://github.com/exc-soft/docker-lnmp)
 
 ### License
 MIT
