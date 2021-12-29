@@ -37,6 +37,8 @@ RUN \
   cron \
   vim \
   iputils-ping \
+  telnet \
+  net-tools \
   # gd
   libfreetype6-dev \
   libjpeg62-turbo-dev \

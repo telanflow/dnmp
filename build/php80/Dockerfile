@@ -40,6 +40,8 @@ RUN set -eux; \
   cron \
   vim \
   iputils-ping \
+  telnet \
+  net-tools \
   \
   libmagickwand-dev \
   libz-dev \

@@ -12,6 +12,8 @@ RUN \
   iputils \
   curl \
   wget \
+  telnet \
+  net-tools \
   git ;
 
 RUN if [[ -z "${PLUGINS##*,amazon-ec2,*}" ]]; then \
