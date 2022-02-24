@@ -87,6 +87,9 @@ RUN docker-php-ext-configure gd \
   # ⬇ Imagick
   pecl install imagick && docker-php-ext-enable imagick; \
   \
+  # ⬇ MongoDB
+  pecl install mongodb && docker-php-ext-enable mongodb; \
+  \
   # ⬇ Redis
   pecl install /home/resource/$REDIS ; \ 
   echo "extension=redis.so" > /usr/local/etc/php/conf.d/redis.ini ; \
