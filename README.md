@@ -1,4 +1,4 @@
-# DNMP 1.4
+# DNMP 1.4.2
 
 DNMP 可以构建出基于 Docker 的 PHP 开发环境，其优势有在短时间内随意构建不同版本的相关服务、环境统一分布在不同服务器等，使开发者能够更专注于开发业务本身。
 
@@ -14,12 +14,12 @@ DNMP 可以构建出基于 Docker 的 PHP 开发环境，其优势有在短时�
 
 * Ningx：latest
 * PHP56：php-fpm 5.6.x `composer:1.8.0 swoole:1.10.5 redis:4.3.0`
-* PHP74：php-fpm 7.4.x `composer:2.1.11 swoole:4.8.5 redis:5.3.5`
-* PHP80：php-fpm 8.0.x `composer:2.1.11 swoole:4.8.5 redis:5.3.5`
-* PHP81：php-fpm 8.1.x `composer:2.1.11 swoole:4.8.5 redis:5.3.5`
+* PHP74：php-fpm 7.4.x `composer:2.1.11 swoole:4.8.7 redis:5.3.7 mongodb:1.12.1`
+* PHP80：php-fpm 8.0.x `composer:2.1.11 swoole:4.8.7 redis:5.3.7 mongodb:1.12.1`
+* PHP81：php-fpm 8.1.x `composer:2.1.11 swoole:4.8.7 redis:5.3.7 mongodb:1.12.1`
 * MySQL：5.7
 * Redis：latest `默认密码：dnmp`
-* Mogodb:  latest `默认验证数据库：admin;账号：admin;密码：admin`
+* Mogodb:  latest `默认验证数据库：admin 账号：admin 密码：admin`
 * ~~ElasticSearch：7.1.1~~
 
 ### 目录结构

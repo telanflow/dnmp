@@ -5,9 +5,12 @@ COPY resource /home/resource
 ARG CHANGE_SOURCE=true
 ARG TIME_ZONE=UTC
 
-ARG SWOOLE=swoole-4.8.5.tgz
-ARG REDIS=redis-5.3.5.tgz
+ARG MongoDB=mongodb-1.12.1.tgz
+ARG OPEN_SWOOLE=openswoole-4.10.0.tgz
+ARG SWOOLE=swoole-4.8.7.tgz
+ARG REDIS=redis-5.3.7.tgz
 ARG MCRYPT=mcrypt-1.0.4.tgz
+ARG XDEBUG=xdebug-3.1.3.tgz
 
 ENV TIME_ZONE=${TIME_ZONE} LC_ALL=C.UTF-8
 
@@ -88,11 +91,16 @@ RUN docker-php-ext-configure gd \
   pecl install imagick && docker-php-ext-enable imagick; \
   \
   # ⬇ MongoDB
-  pecl install mongodb && docker-php-ext-enable mongodb; \
+  pecl install /home/resource/$MongoDB ; \
+  echo "extension=mongodb.so" > /usr/local/etc/php/conf.d/mongodb.ini ; \
   \
   # ⬇ Redis
   pecl install /home/resource/$REDIS ; \ 
   echo "extension=redis.so" > /usr/local/etc/php/conf.d/redis.ini ; \
+  # \
+  # # ⬇ Open Swoole
+  # pecl install /home/resource/$OPEN_SWOOLE ; \
+  # echo "extension=openswoole.so" > /usr/local/etc/php/conf.d/openswoole.ini ; \
   \
   # ⬇ Swoole
   pecl install /home/resource/$SWOOLE ; \
