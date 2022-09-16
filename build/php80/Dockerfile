@@ -64,7 +64,6 @@ RUN set -eux; \
   libpq-dev \
   libjpeg-dev \
   libpng-dev \
-  libfreetype6-dev \
   libssl-dev \
   libfreetype6-dev \
   libjpeg62-turbo-dev \
@@ -80,8 +79,9 @@ RUN set -eux; \
 ####################################################################################
 
 RUN docker-php-ext-configure gd \
-  --with-freetype-dir=/usr/include/ \
-  --with-jpeg-dir=/usr/include/ ; \
+  --prefix=/usr \
+  --with-freetype \
+  --with-jpeg ; \
   docker-php-ext-install -j$(nproc) gd intl pdo_mysql ldap mysqli bz2 zip sockets pgsql pdo_pgsql bcmath soap pcntl; \
   # \
   # ⬇ XDebug
