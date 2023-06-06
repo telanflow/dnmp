@@ -28,7 +28,7 @@ RUN \
   fi; \
   \
   # ⬇ 更新、安装基础组件
-  apt-get update && apt-get install -y --no-install-recommends \
+  apt-get update && apt-get install -y --no-install-recommends --allow-unauthenticated \
   # tools
   wget \
   zip \
