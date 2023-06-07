@@ -1,4 +1,4 @@
-FROM php:7.4-fpm-buster
+FROM php:8.2-fpm-buster
 
 COPY resource /home/resource
 
@@ -7,10 +7,10 @@ ARG TIME_ZONE=UTC
 
 ARG MongoDB=mongodb-1.12.1.tgz
 ARG OPEN_SWOOLE=openswoole-4.10.0.tgz
-ARG SWOOLE=swoole-4.8.13.tgz
+ARG SWOOLE=swoole-5.0.3.tgz
 ARG REDIS=redis-5.3.7.tgz
 ARG MCRYPT=mcrypt-1.0.4.tgz
-ARG XDEBUG=xdebug-3.1.3.tgz
+ARG XDEBUG=xdebug-3.2.1.tgz
 
 ENV TIME_ZONE=${TIME_ZONE} LC_ALL=C.UTF-8
 
@@ -80,8 +80,9 @@ RUN set -eux; \
 ####################################################################################
 
 RUN docker-php-ext-configure gd \
-  --with-freetype-dir=/usr/include/ \
-  --with-jpeg-dir=/usr/include/ ; \
+  --prefix=/usr \
+  --with-freetype \
+  --with-jpeg ; \
   docker-php-ext-install -j$(nproc) gd intl pdo_mysql ldap mysqli bz2 zip sockets pgsql pdo_pgsql bcmath soap pcntl; \
   # \
   # ⬇ XDebug

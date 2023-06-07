@@ -45,6 +45,27 @@ services:
     networks:
       - default
 
+  php72:
+    container_name: dnmp-php72
+    build:
+      context: ./build/php72
+      args:
+        TIME_ZONE: ${GLOBAL_TIME_ZONE}
+        CHANGE_SOURCE: ${GLOBAL_CHANGE_SOURCE}
+    ports:
+      - "${PHP72_FPM_PORT}:9000"
+    volumes:
+      - ${WWW_DIR}:/etc/nginx/html:rw
+      - ./config/php72/php.ini:/usr/local/etc/php/php.ini:ro
+      - ./config/php72/php-fpm.conf:/usr/local/etc/php-fpm.d/www.conf:rw
+      - ./log/php72:/var/log:rw
+    restart: always
+    privileged: true
+    environment:
+      TZ: "$GLOBAL_TIME_ZONE"
+    networks:
+      - default
+
   php74:
     container_name: dnmp-php74
     build:
@@ -108,6 +129,27 @@ services:
     networks:
       - default
 
+  php82:
+    container_name: dnmp-php82
+    build:
+      context: ./build/php82
+      args:
+        TIME_ZONE: ${GLOBAL_TIME_ZONE}
+        CHANGE_SOURCE: ${GLOBAL_CHANGE_SOURCE}
+    ports:
+      - "${PHP82_FPM_PORT}:9000"
+    volumes:
+      - ${WWW_DIR}:/etc/nginx/html:rw
+      - ./config/php82/php.ini:/usr/local/etc/php/php.ini:ro
+      - ./config/php82/php-fpm.conf:/usr/local/etc/php-fpm.d/www.conf:rw
+      - ./log/php82:/var/log:rw
+    restart: always
+    privileged: true
+    environment:
+      TZ: "$GLOBAL_TIME_ZONE"
+    networks:
+      - default
+
   ### Mysql container #########################################
   mysql:
     container_name: dnmp-mysql
@@ -142,71 +184,22 @@ services:
       - default
 
   ### mongodb container #########################################
-  mongodb:
-    container_name: dnmp-mongodb
-    image:  mongo:latest
-    ports:
-      - "${MONGODB_PORT}:27017"
-    environment:
-        MONGO_INITDB_ROOT_USERNAME: "${MONGODB_INITDB_ROOT_USERNAME}"
-        MONGO_INITDB_ROOT_PASSWORD: "${MONGODB_INITDB_ROOT_PASSWORD}"
-        TZ: "$GLOBAL_TIME_ZONE"
-    volumes:
-      - ./data/mongodb/db:/data/db:rw
-      - ./data/mongodb/log:/var/log/mongodb:rw
-    restart: always
-    privileged: true
-    command:
-      --auth
-    networks:
-      - default
-
-
-  ### Elasticsearch container #########################################
-  # es:
-  #   container_name: dnmp-es
-  #   build:
-  #     context: ./build/elasticsearch
-  #     args:
-  #       ELASTICSEARCH_VERSION: ${ELASTICSEARCH_VERSION}
-  #       ELASTICSEARCH_PLUGINS: ${ELASTICSEARCH_PLUGINS}
+  # mongodb:
+  #   container_name: dnmp-mongodb
+  #   image:  mongo:latest
+  #   ports:
+  #     - "${MONGODB_PORT}:27017"
   #   environment:
-  #     - TZ=$GLOBAL_TIME_ZONE
-  #     - discovery.type=single-node
-  #     - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-  #   volumes:
-  #     - ./data/elasticsearch:/usr/share/elasticsearch/data
-  #     - ./config/elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
-  #   hostname: es
-  #   restart: always
-  #   ports:
-  #    - "${ELASTICSEARCH_HOST_PORT_C}:9200"
-  #    - "${ELASTICSEARCH_HOST_PORT_S}:9300"
-  #   networks:
-  #     - default
-  
-  ### Supervisor container ####################################
-  # supervisor:
-  #   container_name: dnmp-supervisor
-  #   build:
-  #     context: ./services/supervisor
-  #     args:
-  #       ALPINE_VERSION: alpine:${ALPINE_VERSION}
+  #       MONGO_INITDB_ROOT_USERNAME: "${MONGODB_INITDB_ROOT_USERNAME}"
+  #       MONGO_INITDB_ROOT_PASSWORD: "${MONGODB_INITDB_ROOT_PASSWORD}"
   #       TZ: "$GLOBAL_TIME_ZONE"
-  #   ports:
-  #     - "${SUPERVISOR_HOST_PORT_C}:9001"
   #   volumes:
-  #     - ./log/supervisor:/var/log/supervisor/:rw
-  #     - ./config/supervisor/conf.d:/etc/supervisor/conf.d/:rw
-  #     - ./config/supervisor/supervisord.conf:/etc/supervisor/supervisord.conf:ro
-  #   command:
-  #     - /bin/sh
-  #     - -c
-  #     - |
-  #       supervisord -n -c /etc/supervisor/supervisord.conf
+  #     - ./data/mongodb/db:/data/db:rw
+  #     - ./data/mongodb/log:/var/log/mongodb:rw
   #   restart: always
-  #   cap_add:
-  #     - SYS_PTRACE
+  #   privileged: true
+  #   command:
+  #     --auth
   #   networks:
   #     - default
 

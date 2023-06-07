@@ -36,12 +36,14 @@ server {
 
     # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
     # 
-    # Or include php56.conf php74.conf php80.conf php81.conf
+    # Or include php56.conf php72.conf php74.conf php80.conf php81.conf php82.conf
     # 
     # include /etc/nginx/rewrite/php56.conf;
+    # include /etc/nginx/rewrite/php72.conf;
     # include /etc/nginx/rewrite/php74.conf;
     # include /etc/nginx/rewrite/php80.conf;
     # include /etc/nginx/rewrite/php81.conf;
+    # include /etc/nginx/rewrite/php82.conf;
     # 
     location ~ \.php$ {
         fastcgi_pass   php81:9000;

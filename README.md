@@ -1,26 +1,29 @@
-# DNMP 1.4.2
+<h1 align="center">
+  <br>DNMP 1.5.0<br>
+</h1>
 
 DNMP 可以构建出基于 Docker 的 PHP 开发环境，其优势有在短时间内随意构建不同版本的相关服务、环境统一分布在不同服务器等，使开发者能够更专注于开发业务本身。
 
 > 友情提示：请务必配置 DockerHub 加速器（方法见底部），不然会镜像下载超时。
 
-### 产品特色
+## 📖 产品特色
 
 * 灵活切换适合国内的源（apt-get、php composer）
 * 组件精简易懂，学习、测试环境、生产环境均适合
 * 良好的扩展性
 
-### 组件（容器）及相关软件版本
+## 🚀 组件（容器）及相关软件版本
 
 * Ningx：latest
-* PHP56：php-fpm 5.6.x `composer:1.8.0 swoole:1.10.5 redis:4.3.0`
-* PHP74：php-fpm 7.4.x `composer:2.1.11 swoole:4.8.7 redis:5.3.7 mongodb:1.12.1`
-* PHP80：php-fpm 8.0.x `composer:2.1.11 swoole:4.8.7 redis:5.3.7 mongodb:1.12.1`
-* PHP81：php-fpm 8.1.x `composer:2.1.11 swoole:4.8.7 redis:5.3.7 mongodb:1.12.1`
+* PHP56：php-fpm 5.6.x `composer:2.2.x swoole:1.10.5 redis:4.3.0`
+* PHP72：php-fpm 7.2.x `composer:2.5.7 swoole:4.8.13 redis:5.3.7 mongodb:1.15.3`
+* PHP74：php-fpm 7.4.x `composer:2.5.7 swoole:4.8.13 redis:5.3.7 mongodb:1.15.3`
+* PHP80：php-fpm 8.0.x `composer:2.5.7 swoole:5.0.3 redis:5.3.7 mongodb:1.15.3`
+* PHP81：php-fpm 8.1.x `composer:2.5.7 swoole:5.0.3 redis:5.3.7 mongodb:1.15.3`
+* PHP82：php-fpm 8.2.x `composer:2.5.7 swoole:5.0.3 redis:5.3.7 mongodb:1.15.3`
 * MySQL：5.7
 * Redis：latest `默认密码：dnmp`
 * Mogodb:  latest `默认验证数据库：admin 账号：admin 密码：admin`
-* ~~ElasticSearch：7.1.1~~
 
 ### 目录结构
 
@@ -32,7 +35,7 @@ DNMP 可以构建出基于 Docker 的 PHP 开发环境，其优势有在短时�
     |----/.env-example           配置文件示例
     |----/docker-compose.yml     docker compose 配置文件
 
-## 开始安装
+## 🛠 开始安装
 
 没有安装 Docker 的同学移步 [安装教程](https://github.com/telanflow/dnmp.git#安装-docker-及相关工具)，如果你有足够的时间强烈建议通读 [Docker — 从入门到实践](https://yeasy.gitbooks.io/docker_practice/content/)
 
@@ -49,10 +52,10 @@ DNMP 可以构建出基于 Docker 的 PHP 开发环境，其优势有在短时�
     sudo docker-compose up --build -d
     
     # 构建单个镜像并启动容器
-    sudo docker-compose up --build -d [nginx|php56|php74|php80 ...]
+    sudo docker-compose up --build -d [nginx|php56|php72|php74|php80 ...]
     
     # 构建单个镜像
-    sudo docker-compose build --no-cache [nginx|php56|php74|php80 ...]
+    sudo docker-compose build --no-cache [nginx|php56|php72|php74|php80 ...]
 
 > 📢 注意：dnmp部署完成后，需要修改redis服务的密码`config/redis/redis.conf 设置 requirepass dnmp（替换成你自己的密码）`
 
@@ -185,5 +188,5 @@ DaoCloud 加速器：http://guide.daocloud.io/dcs/daocloud-9153151.html
 
 腾讯云加速器：https://www.qcloud.com/document/product/457/7207
 
-### License
-MIT
+## 📄 License
+[MIT License](/LICENSE)
