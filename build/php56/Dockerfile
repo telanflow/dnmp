@@ -29,44 +29,47 @@ RUN \
   \
   # ⬇ 更新、安装基础组件
   apt-get update && apt-get install -y --no-install-recommends --allow-unauthenticated \
-  # tools
   wget \
   zip \
+  gzip \
   unzip \
   git \
   cron \
   vim \
   iputils-ping \
   telnet \
-  net-tools \
+  openssl \
+  libssl-dev \
+  net-tools ; \
+  \
   # gd
+  apt-get install -y --allow-unauthenticated \
   libfreetype6-dev \
   libjpeg62-turbo-dev \
   libpng-dev \
+  libxpm-dev ; \
+  \
   # intl
-  libicu-dev \
-  # soap xsl xmlrpc wddx
-  libxml2-dev \
-  libxslt-dev \
-  # bz2
-  libbz2-dev \
-  # mcrypt
-  libmcrypt-dev \
-  # zip
-  libzip-dev \
-  # readline
-  #libreadline-dev \
-  # snmp
-  #libsnmp-dev \
-  #snmp \
+  apt-get install -y --allow-unauthenticated icu-devtools libicu-dev zlib1g-dev ; \
+  \
+  # soap xsl xmlrpc wddx readline
+  apt-get install -y --allow-unauthenticated libxml2-dev libxslt-dev libreadline-dev libedit-dev ; \
+  \
+  # bz2 mcrypt zip
+  apt-get install -y --allow-unauthenticated libbz2-dev libmcrypt-dev libzip-dev; \
+  \
+  # readline snmp
+  apt-get install -y --allow-unauthenticated libreadline-dev libsnmp-dev snmp ; \
+  \
   # ldap
-  libldb-dev \
-  libldap2-dev \
+  apt-get install -y --allow-unauthenticated libldb-dev libldap2-dev ; \
+  \
   # other
   # graphicsmagick \
   # libgraphicsmagick1-dev \
   # imagemagick \
   # libmagickwand-dev \
+  apt-get install -y --allow-unauthenticated \
   libssl-dev \
   libmhash-dev \
   procps \
@@ -77,13 +80,46 @@ RUN \
 ####################################################################################
 # 安装 PHP 扩展
 ####################################################################################
+# --with-freetype-dir=/usr/include/freetype2/ \
 
-RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ ; \
-  docker-php-ext-install gd intl soap xsl xmlrpc wddx \
-  bz2 zip pcntl pdo_mysql mysqli mbstring exif \
-  bcmath calendar sockets gettext shmop \
-  sysvmsg sysvsem sysvshm mcrypt ldap ; \
-  #\
+RUN docker-php-ext-configure gd --with-xpm-dir=/usr/include/ --with-jpeg-dir=/usr/include/ ; \
+  docker-php-ext-install -j$(nproc) gd ; \
+  \
+  # readline
+  docker-php-ext-configure readline --with-readline CPPFLAGS="-I/usr/include/readline" ; \
+  docker-php-ext-install readline ; \
+  \
+  # 常用扩展
+  docker-php-ext-install bcmath mcrypt exif ; \
+  \
+  # 其他
+  docker-php-ext-install mysqli \
+  pdo_mysql \
+  bz2 \
+  calendar \
+  exif \
+  gettext \
+  pcntl \
+  readline \
+  pgsql \
+  pdo_pgsql \
+  shmop \
+  sockets \
+  wddx \
+  xsl \
+  zip \
+  opcache \
+  xmlrpc \
+  soap \
+  mbstring \
+  sysvmsg \
+  sysvsem \
+  sysvshm \
+  ldap ; \
+  # intl
+  docker-php-ext-configure intl --with-icu-dir=DEFAULT ; \
+  docker-php-ext-install intl ; \
+  # \
   # ⬇ XDebug
   # pecl install /home/resource/$XDEBUG ; \
   \

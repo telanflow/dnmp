@@ -9,7 +9,7 @@ ARG MongoDB=mongodb-1.12.1.tgz
 ARG OPEN_SWOOLE=openswoole-4.10.0.tgz
 ARG SWOOLE=swoole-5.0.3.tgz
 ARG REDIS=redis-5.3.7.tgz
-ARG MCRYPT=mcrypt-1.0.4.tgz
+ARG MCRYPT=mcrypt-1.0.6.tgz
 ARG XDEBUG=xdebug-3.2.1.tgz
 
 ENV TIME_ZONE=${TIME_ZONE} LC_ALL=C.UTF-8
