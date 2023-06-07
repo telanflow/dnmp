@@ -33,7 +33,8 @@ DNMP 可以构建出基于 Docker 的 PHP 开发环境，其优势有在短时�
     |----/data                   持久化数据目录
     |----/www                    WEB文件目录
     |----/.env-example           配置文件示例
-    |----/docker-compose.yml     docker compose 配置文件
+    |----/docker-compose.yml     docker compose 配置文件（需本地编译）
+    |----/docker-compose.yml.hub docker compose 配置文件（从Docker Hub拉取编译好的镜像）
 
 ## 🛠 开始安装
 
