@@ -1,0 +1,179 @@
+version: "3"
+
+services:
+  ### Nginx container #########################################
+  nginx:
+    container_name: dnmp-nginx
+    image: telan/dnmp-nginx:latest
+    ports:
+      - "${HTTP_PORT}:80"
+      - "${HTTPS_PORT}:443"
+    volumes:
+      - ${WWW_DIR}:/etc/nginx/html/:rw
+      - ./config/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./config/nginx/vhost:/etc/nginx/conf.d:ro
+      - ./config/nginx/rewrite:/etc/nginx/rewrite:ro
+      - ./log/nginx:/var/log/nginx:rw
+    restart: always
+    privileged: true
+    networks:
+      - default
+
+  ### PHP container #########################################
+  php56:
+    container_name: dnmp-php56
+    image: telan/dnmp-php56:latest
+    ports:
+      - "${PHP56_FPM_PORT}:9000"
+    volumes:
+      - ${WWW_DIR}:/etc/nginx/html:rw
+      - ./config/php56/php.ini:/usr/local/etc/php/php.ini:ro
+      - ./config/php56/php-fpm.conf:/usr/local/etc/php-fpm.d/www.conf:rw
+      - ./log/php56:/var/log:rw
+    restart: always
+    privileged: true
+    environment:
+      TZ: "$GLOBAL_TIME_ZONE"
+    networks:
+      - default
+
+  php72:
+    container_name: dnmp-php72
+    image: telan/dnmp-php72:latest
+    ports:
+      - "${PHP72_FPM_PORT}:9000"
+    volumes:
+      - ${WWW_DIR}:/etc/nginx/html:rw
+      - ./config/php72/php.ini:/usr/local/etc/php/php.ini:ro
+      - ./config/php72/php-fpm.conf:/usr/local/etc/php-fpm.d/www.conf:rw
+      - ./log/php72:/var/log:rw
+    restart: always
+    privileged: true
+    environment:
+      TZ: "$GLOBAL_TIME_ZONE"
+    networks:
+      - default
+
+  php74:
+    container_name: dnmp-php74
+    image: telan/dnmp-php74:latest
+    ports:
+      - "${PHP74_FPM_PORT}:9000"
+    volumes:
+      - ${WWW_DIR}:/etc/nginx/html:rw
+      - ./config/php74/php.ini:/usr/local/etc/php/php.ini:ro
+      - ./config/php74/php-fpm.conf:/usr/local/etc/php-fpm.d/www.conf:rw
+      - ./log/php74:/var/log:rw
+    restart: always
+    privileged: true
+    environment:
+      TZ: "$GLOBAL_TIME_ZONE"
+    networks:
+      - default
+
+  php80:
+    container_name: dnmp-php80
+    image: telan/dnmp-php80:latest
+    ports:
+      - "${PHP80_FPM_PORT}:9000"
+    volumes:
+      - ${WWW_DIR}:/etc/nginx/html:rw
+      - ./config/php80/php.ini:/usr/local/etc/php/php.ini:ro
+      - ./config/php80/php-fpm.conf:/usr/local/etc/php-fpm.d/www.conf:rw
+      - ./log/php80:/var/log:rw
+    restart: always
+    privileged: true
+    environment:
+      TZ: "$GLOBAL_TIME_ZONE"
+    networks:
+      - default
+
+  php81:
+    container_name: dnmp-php81
+    image: telan/dnmp-php81:latest
+    ports:
+      - "${PHP81_FPM_PORT}:9000"
+    volumes:
+      - ${WWW_DIR}:/etc/nginx/html:rw
+      - ./config/php81/php.ini:/usr/local/etc/php/php.ini:ro
+      - ./config/php81/php-fpm.conf:/usr/local/etc/php-fpm.d/www.conf:rw
+      - ./log/php81:/var/log:rw
+    restart: always
+    privileged: true
+    environment:
+      TZ: "$GLOBAL_TIME_ZONE"
+    networks:
+      - default
+
+  php82:
+    container_name: dnmp-php82
+    image: telan/dnmp-php82:latest
+    ports:
+      - "${PHP82_FPM_PORT}:9000"
+    volumes:
+      - ${WWW_DIR}:/etc/nginx/html:rw
+      - ./config/php82/php.ini:/usr/local/etc/php/php.ini:ro
+      - ./config/php82/php-fpm.conf:/usr/local/etc/php-fpm.d/www.conf:rw
+      - ./log/php82:/var/log:rw
+    restart: always
+    privileged: true
+    environment:
+      TZ: "$GLOBAL_TIME_ZONE"
+    networks:
+      - default
+
+  ### Mysql container #########################################
+  mysql:
+    container_name: dnmp-mysql
+    image: mysql:5.7
+    ports:
+      - "${MYSQL_PORT}:3306"
+    volumes:
+      - ./data/mysql:/var/lib/mysql:rw
+      - ./config/mysql/my.cnf:/etc/mysql/conf.d/mysql.cnf:ro
+      - ./log/mysql:/var/log/mysql:rw
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
+      TZ: "$GLOBAL_TIME_ZONE"
+    networks:
+      - default
+
+  ### Redis container #########################################
+  redis:
+    container_name: dnmp-redis
+    image: redis:latest
+    ports:
+      - "${REDIS_PORT}:6379"
+    command: redis-server /usr/local/etc/redis/redis.conf
+    volumes:
+      - ./config/redis/redis.conf:/usr/local/etc/redis/redis.conf:ro
+      - ./log/redis:/var/log/redis:rw
+      - ./data/redis:/data:rw
+    restart: always
+    privileged: true
+    networks:
+      - default
+
+  ### mongodb container #########################################
+  # mongodb:
+  #   container_name: dnmp-mongodb
+  #   image:  mongo:latest
+  #   ports:
+  #     - "${MONGODB_PORT}:27017"
+  #   environment:
+  #       MONGO_INITDB_ROOT_USERNAME: "${MONGODB_INITDB_ROOT_USERNAME}"
+  #       MONGO_INITDB_ROOT_PASSWORD: "${MONGODB_INITDB_ROOT_PASSWORD}"
+  #       TZ: "$GLOBAL_TIME_ZONE"
+  #   volumes:
+  #     - ./data/mongodb/db:/data/db:rw
+  #     - ./data/mongodb/log:/var/log/mongodb:rw
+  #   restart: always
+  #   privileged: true
+  #   command:
+  #     --auth
+  #   networks:
+  #     - default
+
+networks:
+  default:
