@@ -48,14 +48,17 @@ DNMP 可以构建出基于 Docker 的 PHP 开发环境，其优势有在短时�
     
     # 配置数据库密码、时区、端口等
     vim .env
+
+    # 基于Docker Hub已编译好的镜像启动容器
+    sudo docker-compose up --build -d -f docker-compose-hub.yml
     
-    # 构建全部镜像并启动容器
+    # 本地构建全部镜像并启动容器
     sudo docker-compose up --build -d
     
-    # 构建单个镜像并启动容器
+    # 本地构建单个镜像并启动容器
     sudo docker-compose up --build -d [nginx|php56|php72|php74|php80 ...]
     
-    # 构建单个镜像
+    # 本地构建单个镜像
     sudo docker-compose build --no-cache [nginx|php56|php72|php74|php80 ...]
 
 > 📢 注意：dnmp部署完成后，需要修改redis服务的密码`config/redis/redis.conf 设置 requirepass dnmp（替换成你自己的密码）`
