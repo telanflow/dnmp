@@ -14,7 +14,7 @@ ARG XDEBUG=xdebug-3.1.3.tgz
 
 ENV TIME_ZONE=${TIME_ZONE} LC_ALL=C.UTF-8
 
-RUN set -eux; \
+RUN \
   # ⬇ 修改时区
   ln -snf /usr/share/zoneinfo/$TIME_ZONE /etc/localtime ; \ 
   echo $TIME_ZONE > /etc/timezone ; \
@@ -32,7 +32,7 @@ RUN set -eux; \
   fi; \
   \
   # ⬇ 更新、安装基础组件
-  apt-get update; \
+  apt-get update -y --allow-unauthenticated; \
   apt-get upgrade -y --allow-unauthenticated ; \
   # 基础
   apt-get install -y --allow-remove-essential --no-install-recommends --allow-unauthenticated \
