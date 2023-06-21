@@ -50,7 +50,7 @@ DNMP 可以构建出基于 Docker 的 PHP 开发环境，其优势有在短时�
     vim .env
 
     # 基于Docker Hub已编译好的镜像启动容器
-    sudo docker-compose up --build -d -f docker-compose-hub.yml
+    sudo docker-compose -f docker-compose-hub.yml up -d
     
     # 本地构建全部镜像并启动容器
     sudo docker-compose up --build -d
