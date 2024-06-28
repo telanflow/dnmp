@@ -199,6 +199,8 @@ DNMP 可以构建出基于 Docker 的 PHP 开发环境，其优势有在短时�
 
 [Docker Hub 镜像加速器](https://gist.github.com/y0ngb1n/7e8f16af3242c7815e7ca2f0833d3ea6)
 
+[2024-06-18 Docker Hub 镜像源列表](https://linux.do/t/topic/114516)
+
 > Ubuntu 16.04+、Debian 8+、CentOS 7+
 
 创建或修改 /etc/docker/daemon.json：
