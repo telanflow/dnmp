@@ -5,6 +5,8 @@ npm-debug.log
 .env
 Homestead.yaml
 Homestead.json
+.idea
+.vscode
 
 # Rocketeer PHP task runner and deployment package. https://github.com/rocketeers/rocketeer
 .rocketeer/
