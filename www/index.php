@@ -49,7 +49,7 @@
 
 	<p align="center" class="mine">
 	<span>DNMP</span>
-	<span class="subtitle">v1.5.0</span>
+	<span class="subtitle">v1.6.0</span>
 	</p>
 
 	<div class="desc" align="center">

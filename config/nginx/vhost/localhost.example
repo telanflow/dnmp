@@ -44,6 +44,8 @@ server {
     # include /etc/nginx/rewrite/php80.conf;
     # include /etc/nginx/rewrite/php81.conf;
     # include /etc/nginx/rewrite/php82.conf;
+    # include /etc/nginx/rewrite/php83.conf;
+    # include /etc/nginx/rewrite/php84.conf;
     # 
     location ~ \.php$ {
         fastcgi_pass   php81:9000;

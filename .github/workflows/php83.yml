@@ -1,4 +1,4 @@
-name: dnmp-nginx
+name: dnmp-php83
 
 on:
   release:
@@ -8,13 +8,11 @@ on:
   #   tags: [ 'v*.*.*' ]
   pull_request:
     branches: [ "master" ]
-  workflow_dispatch:
-    
 
 env:
   REGISTRY: docker.io
-  IMAGE_NAME: telan/dnmp-nginx
-  BUILD_CONTEXT: ./build/nginx
+  IMAGE_NAME: telan/dnmp-php83
+  BUILD_CONTEXT: ./build/php83
 
 
 jobs:

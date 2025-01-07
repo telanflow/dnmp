@@ -1,5 +1,5 @@
 <h1 align="center">
-  <br>DNMP 1.5<br>
+  <br>DNMP 1.6<br>
 </h1>
 
 DNMP 可以构建出基于 Docker 的 PHP 开发环境，其优势有在短时间内随意构建不同版本的相关服务、环境统一分布在不同服务器等，使开发者能够更专注于开发业务本身。
@@ -18,9 +18,11 @@ DNMP 可以构建出基于 Docker 的 PHP 开发环境，其优势有在短时�
 * PHP56：php-fpm 5.6.x `composer:2.2.x swoole:1.10.5 redis:4.3.0`
 * PHP72：php-fpm 7.2.x `composer:2.5.7 swoole:4.8.13 redis:5.3.7 mongodb:1.15.3`
 * PHP74：php-fpm 7.4.x `composer:2.5.7 swoole:4.8.13 redis:5.3.7 mongodb:1.15.3`
-* PHP80：php-fpm 8.0.x `composer:2.5.7 swoole:5.0.3 redis:5.3.7 mongodb:1.15.3`
-* PHP81：php-fpm 8.1.x `composer:2.5.7 swoole:5.0.3 redis:5.3.7 mongodb:1.15.3`
-* PHP82：php-fpm 8.2.x `composer:2.5.7 swoole:5.0.3 redis:5.3.7 mongodb:1.15.3`
+* PHP80：php-fpm 8.0.x `composer:2.5.7 swoole:5.0.3 redis:6.1.0 mongodb:1.15.3`
+* PHP81：php-fpm 8.1.x `composer:2.8.4 swoole:5.1.6 redis:6.1.0 mongodb:1.20.1`
+* PHP82：php-fpm 8.2.x `composer:2.8.4 swoole:6.0.0 redis:6.1.0 mongodb:1.20.1`
+* PHP83：php-fpm 8.3.x `composer:2.8.4 swoole:6.0.0 redis:6.1.0 mongodb:1.20.1`
+* PHP84：php-fpm 8.4.x `composer:2.8.4 swoole:6.0.0 redis:6.1.0 mongodb:1.20.1`
 * MySQL：5.7
 * Redis：latest `默认密码：dnmp`
 * Mogodb:  latest `默认验证数据库：admin 账号：admin 密码：admin`
@@ -56,10 +58,10 @@ DNMP 可以构建出基于 Docker 的 PHP 开发环境，其优势有在短时�
     sudo docker-compose up --build -d
     
     # 本地构建单个镜像并启动容器
-    sudo docker-compose up --build -d [nginx|php56|php72|php74|php80 ...]
+    sudo docker-compose up --build -d [nginx|php56|php74|php80 ...]
     
     # 本地构建单个镜像
-    sudo docker-compose build --no-cache [nginx|php56|php72|php74|php80 ...]
+    sudo docker-compose build --no-cache [nginx|php56|php74|php80 ...]
 
 > 📢 注意：dnmp部署完成后，需要修改redis服务的密码`config/redis/redis.conf 设置 requirepass dnmp（替换成你自己的密码）`
 
@@ -201,27 +203,55 @@ DNMP 可以构建出基于 Docker 的 PHP 开发环境，其优势有在短时�
 
 [2024-06-18 Docker Hub 镜像源列表](https://linux.do/t/topic/114516)
 
+[2025-01-03 国内可用Docker镜像源加速器](https://www.wangdu.site/course/2109.html)
+
 > Ubuntu 16.04+、Debian 8+、CentOS 7+
 
 创建或修改 /etc/docker/daemon.json：
 
 ```bash
 sudo mkdir -p /etc/docker
-sudo tee /etc/docker/daemon.json <<-'EOF'
+sudo tee /etc/docker/daemon.json <<EOF
 {
     "registry-mirrors": [
-        "https://hub.uuuadc.top",
-        "https://docker.anyhub.us.kg",
-        "https://dockerhub.jobcher.com",
-        "https://dockerhub.icu",
-        "https://docker.ckyl.me",
-        "https://docker.awsl9527.cn"
+        "https://docker.1panel.dev",
+        "https://docker.foreverlink.love",
+        "https://docker.xn--6oq72ry9d5zx.cn",
+        "https://docker.zhai.cm",
+        "https://docker.5z5f.com",
+        "https://a.ussh.net",
+        "https://docker.cloudlayer.icu",
+        "https://hub.littlediary.cn",
+        "https://hub.crdz.gq",
+        "https://docker.unsee.tech",
+        "https://docker.kejilion.pro",
+        "https://registry.dockermirror.com",
+        "https://hub.rat.dev",
+        "https://dhub.kubesre.xyz",
+        "https://docker.nastool.de",
+        "https://docker.udayun.com",
+        "https://docker.rainbond.cc",
+        "https://docker.1panelproxy.com",
+        "https://atomhub.openatom.cn",
+        "https://docker.m.daocloud.io",
+        "https://docker.1ms.run",
+        "https://docker.linkedbus.com",
+        "https://dytt.online",
+        "https://func.ink",
+        "https://lispy.org",
+        "https://docker.xiaogenban1993.com"
     ]
 }
 EOF
 sudo systemctl daemon-reload
 sudo systemctl restart docker
 ```
+
+### 配置Docker Desktop Proxies
+
+如果不想配置加速器，可以直接使用代理方式。（该方式更快速有效，加速build时资源下载速度）
+
+![alt text](docker-desktop-proxies.png)
 
 
 ## 📄 License

@@ -1,15 +1,14 @@
-FROM php:8.0-fpm-buster
+FROM php:8.0-fpm-bullseye
 
 COPY resource /home/resource
 
-ARG CHANGE_SOURCE=true
 ARG TIME_ZONE=UTC
 
 ARG MongoDB=mongodb-1.15.3.tgz
 ARG OPEN_SWOOLE=openswoole-4.10.0.tgz
 ARG SWOOLE=swoole-5.0.3.tgz
-ARG REDIS=redis-5.3.7.tgz
-ARG MCRYPT=mcrypt-1.0.6.tgz
+ARG REDIS=redis-6.1.0.tgz
+ARG MCRYPT=mcrypt-1.0.7.tgz
 ARG XDEBUG=xdebug-3.2.1.tgz
 
 ENV TIME_ZONE=${TIME_ZONE} LC_ALL=C.UTF-8
@@ -23,16 +22,8 @@ RUN set -eux; \
   mv /home/resource/composer.phar /usr/local/bin/composer ; \
   chmod 755 /usr/local/bin/composer ; \
   \
-  # ⬇ 替换源
-  rm -rf /etc/apt/sources.list.d/buster.list ; \
-  if [ ${CHANGE_SOURCE} = true ]; then \
-    mv /etc/apt/sources.list /etc/apt/source.list.bak; \ 
-    mv /home/resource/sources.list /etc/apt/sources.list; \
-    composer config -g repo.packagist composer https://mirrors.aliyun.com/composer/ ; \
-  fi; \
-  \
   # ⬇ 更新、安装基础组件
-  apt-get update; \
+  apt-get update --fix-missing; \
   apt-get upgrade -y --allow-unauthenticated ; \
   # 基础
   apt-get install -y --allow-remove-essential --no-install-recommends --allow-unauthenticated \

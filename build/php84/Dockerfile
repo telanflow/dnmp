@@ -1,4 +1,4 @@
-FROM php:8.2-fpm-bullseye
+FROM php:8.4-fpm-bullseye
 
 COPY resource /home/resource
 
@@ -39,6 +39,7 @@ RUN set -eux; \
   libssl-dev \
   apt-transport-https \
   ca-certificates \ 
+  zsh \
   net-tools ; \
   # gd
   apt-get install -y --allow-unauthenticated libfreetype6-dev \

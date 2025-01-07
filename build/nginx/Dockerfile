@@ -1,7 +1,5 @@
 FROM nginx:latest
 
-COPY resource /home/resource
-
 ARG TIME_ZONE=UTC
 
 ENV TIME_ZONE=${TIME_ZONE} LC_ALL=C.UTF-8
@@ -23,4 +21,5 @@ RUN \
   iputils-ping \
   telnet \
   net-tools \
+  zsh \
   ntpdate ;
