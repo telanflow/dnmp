@@ -239,7 +239,16 @@ sudo tee /etc/docker/daemon.json <<EOF
         "https://dytt.online",
         "https://func.ink",
         "https://lispy.org",
-        "https://docker.xiaogenban1993.com"
+        "https://docker.xiaogenban1993.com",
+        "cr.laoyou.ip-ddns.com",
+        "docker.1panel.live",
+        "image.cloudlayer.icu",
+        "hub.fast360.xyz",
+        "docker-0.unsee.tech",
+        "docker.1panelproxy.com",
+        "docker.tbedu.top",
+        "dockerpull.cn",
+        "ccr.ccs.tencentyun.com"
     ]
 }
 EOF
