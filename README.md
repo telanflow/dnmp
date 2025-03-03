@@ -240,15 +240,15 @@ sudo tee /etc/docker/daemon.json <<EOF
         "https://func.ink",
         "https://lispy.org",
         "https://docker.xiaogenban1993.com",
-        "cr.laoyou.ip-ddns.com",
-        "docker.1panel.live",
-        "image.cloudlayer.icu",
-        "hub.fast360.xyz",
-        "docker-0.unsee.tech",
-        "docker.1panelproxy.com",
-        "docker.tbedu.top",
-        "dockerpull.cn",
-        "ccr.ccs.tencentyun.com"
+        "https://cr.laoyou.ip-ddns.com",
+        "https://docker.1panel.live",
+        "https://image.cloudlayer.icu",
+        "https://hub.fast360.xyz",
+        "https://docker-0.unsee.tech",
+        "https://docker.1panelproxy.com",
+        "https://docker.tbedu.top",
+        "https://dockerpull.cn",
+        "https://ccr.ccs.tencentyun.com"
     ]
 }
 EOF
